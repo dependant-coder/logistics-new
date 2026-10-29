@@ -52,3 +52,7 @@ Thumbs.db
 *.njsproj
 *.sln
 *.sw?
+
+# Postman local workspace metadata (machine-specific)
+.postman/
+postman/globals/
