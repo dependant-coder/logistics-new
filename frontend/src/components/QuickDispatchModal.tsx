@@ -1,106 +1,162 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useLogistics } from '../contexts/LogisticsContext';
-import { getLocations, addOrder } from '../api';
-import { X, PackagePlus } from 'lucide-react';
+import { getLocations, addOrder, type Location } from '../api';
+import { X } from 'lucide-react';
+import { SendIcon } from 'lucide-animated';
+import { MorphButton } from './common/MorphButton';
 
 interface QuickDispatchModalProps {
   isOpen: boolean;
   onClose: () => void;
+  onSuccess?: () => void;
+  initialToLocation?: string;
 }
 
-export default function QuickDispatchModal({ isOpen, onClose }: QuickDispatchModalProps) {
+export default function QuickDispatchModal({ 
+  isOpen, 
+  onClose,
+  onSuccess,
+  initialToLocation
+}: QuickDispatchModalProps) {
   const { products, logActivity } = useLogistics();
-  const [locations, setLocations] = useState<any[]>([]);
+  const [locations, setLocations] = useState<Location[]>([]);
   const [selectedProduct, setSelectedProduct] = useState('');
-  const [destLocation, setDestLocation] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [destLocation, setDestLocation] = useState(initialToLocation || '');
 
   useEffect(() => {
     if (isOpen) {
-      getLocations().then(setLocations).catch(console.error);
+      getLocations().then(locs => {
+        setLocations(locs);
+        if (initialToLocation) {
+          const match = locs.find(l => l.name.toLowerCase().includes(initialToLocation.toLowerCase()) || l.id === initialToLocation);
+          if (match) setDestLocation(match.id);
+        }
+      }).catch(console.error);
     }
-  }, [isOpen]);
+  }, [isOpen, initialToLocation]);
 
   if (!isOpen) return null;
 
-  const handleCreateOrder = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const submitDispatch = async () => {
     const prod = products.find(p => p.id === selectedProduct);
-    if (!prod || !destLocation) return;
+    if (!prod || !destLocation) {
+      alert("Please select both product and destination hub");
+      throw new Error("Invalid selection");
+    }
     
-    setIsSubmitting(true);
-    try {
-      const backendSource = locations.find(l => l.name.includes(prod.location) || l.id == prod.location)?.id;
-      const backendDest = destLocation;
+    const backendSource = locations.find(l => l.name.includes(prod.location) || l.id === prod.location)?.id;
+    const backendDest = destLocation;
 
-      if(backendSource && backendDest) {
-        await addOrder({ source: backendSource, destination: backendDest });
-        logActivity(`Created quick order for ${prod.name}`);
-        onClose(); // close on success
+    if (backendSource && backendDest) {
+      await addOrder({ source: backendSource, destination: backendDest });
+      logActivity(`Created quick order for ${prod.name}`);
+      setTimeout(() => {
+        onClose();
+        if (onSuccess) onSuccess();
         setSelectedProduct('');
         setDestLocation('');
-      } else {
-        alert("Please select valid network nodes mapping to the backend");
-      }
-    } catch (err) {
-      console.error(err);
-      alert("Failed creating order. Is backend node running?");
-    } finally {
-      setIsSubmitting(false);
+      }, 700);
+    } else {
+      alert("Please select valid network nodes mapping to the backend");
+      throw new Error("Invalid network mapping");
     }
   };
 
   return (
-    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/50 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-xl shadow-2xl w-full max-w-md overflow-hidden animate-slide-up relative">
+    <div className="fixed inset-0 z-[200] flex items-center justify-center p-4 bg-[#06080a]/85 backdrop-blur-md animate-fade-in">
+      <div className="bg-[#0d1114] border border-[#c8ff2e] rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-[0_0_40px_-10px_rgba(200,255,46,0.3)] relative space-y-5">
         
-        <div className="flex justify-between items-center p-5 border-b border-slate-100 bg-slate-50">
-          <h2 className="text-xl font-bold text-slate-800 flex items-center gap-2">
-            <PackagePlus className="text-blue-500" /> New Dispatch
-          </h2>
-          <button onClick={onClose} className="p-1 rounded-md text-slate-400 hover:text-red-500 hover:bg-slate-200 transition">
+        {/* Header */}
+        <div className="flex justify-between items-center pb-4 border-b border-white/10">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-xl bg-[#c8ff2e]/20 text-[#c8ff2e] flex items-center justify-center font-bold">
+              <SendIcon size={18} animateOnHover={true} />
+            </div>
+            <div>
+              <h3 className="font-extrabold text-xl tracking-tight text-white font-['Syne'] uppercase">
+                New Dijkstra Dispatch
+              </h3>
+              <p className="font-mono text-[10px] text-[#7f8a79] uppercase tracking-wider">
+                Autonomous Corridor Route Allocation
+              </p>
+            </div>
+          </div>
+          <button 
+            onClick={onClose} 
+            className="p-1.5 rounded-lg text-[#7f8a79] hover:text-white hover:bg-white/5 transition"
+          >
             <X size={20} />
           </button>
         </div>
 
-        <form onSubmit={handleCreateOrder} className="p-6 space-y-5">
+        {/* Form */}
+        <form onSubmit={(e) => { e.preventDefault(); submitDispatch(); }} className="space-y-4 text-xs font-sans">
           <div>
-            <label className="text-sm font-medium text-slate-700 block mb-1">Inventory Product</label>
+            <label className="font-mono text-[11px] text-[#7f8a79] uppercase block mb-1.5 font-bold">
+              Select Inventory Stock
+            </label>
             <select 
-              className="w-full bg-white border border-slate-300 text-slate-900 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition outline-none" 
+              className="input-dark text-xs"
               required 
               value={selectedProduct} 
               onChange={(e) => setSelectedProduct(e.target.value)}
             >
-              <option value="">-- Choose Item --</option>
+              <option value="">-- Select SKU Product --</option>
               {products.filter(p => p.quantity > 0).map(p => (
-                <option key={p.id} value={p.id}>{p.name} (Loc: {p.location})</option>
+                <option key={p.id} value={p.id}>
+                  {p.name} (Location: {p.location} · In Stock: {p.quantity})
+                </option>
               ))}
             </select>
           </div>
+
           <div>
-            <label className="text-sm font-medium text-slate-700 block mb-1">Destination Hub</label>
+            <label className="font-mono text-[11px] text-[#7f8a79] uppercase block mb-1.5 font-bold">
+              Destination Freight Node
+            </label>
             <select 
-              className="w-full bg-white border border-slate-300 text-slate-900 p-3 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition outline-none" 
+              className="input-dark text-xs" 
               required 
               value={destLocation} 
               onChange={e => setDestLocation(e.target.value)}
             >
-              <option value="">-- Choose Dropoff --</option>
+              <option value="">-- Select Dropoff Hub --</option>
               {locations.map(loc => (
-                <option key={loc.id} value={loc.id}>{loc.name}</option>
+                <option key={loc.id} value={loc.id}>
+                  {loc.name} {loc.code ? `(${loc.code})` : ''}
+                </option>
               ))}
             </select>
           </div>
-          
-          <div className="pt-2">
+
+          {/* Path Preview Info */}
+          <div className="p-4 rounded-xl bg-[#06080a] border border-white/10 space-y-1.5 font-mono text-[11px]">
+            <div className="flex justify-between items-center text-[#c8ff2e] font-bold">
+              <span>Dijkstra Algorithm Ready</span>
+              <span>12ms SLA</span>
+            </div>
+            <p className="text-[#7f8a79]">
+              Calculates shortest path across national highway corridors with real-time waypoint tracking.
+            </p>
+          </div>
+
+          <div className="flex justify-end gap-3 pt-2">
             <button 
-              type="submit" 
-              disabled={isSubmitting}
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-lg font-semibold shadow-lg shadow-blue-500/30 transition disabled:opacity-70 flex justify-center items-center"
+              type="button" 
+              onClick={onClose} 
+              className="btn-volt sm"
             >
-              {isSubmitting ? 'Processing...' : 'Confirm Dispatch'}
+              Cancel
             </button>
+            <MorphButton
+              label="Authorize & Dispatch →"
+              loadingLabel="Routing..."
+              successLabel="Dispatched ✓"
+              errorLabel="Route Failed ✗"
+              onClick={submitDispatch}
+              variant="volt-primary"
+              disabled={!selectedProduct || !destLocation}
+            />
           </div>
         </form>
 

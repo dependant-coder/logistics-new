@@ -76,6 +76,8 @@ export interface WarehouseInventoryItem {
   unit_price: number;
   status: 'In Stock' | 'Low Stock' | 'Out of Stock' | 'Dispatched';
   last_updated?: string;
+  warehouse_name?: string;
+  warehouse_city?: string;
 }
 
 export interface DatabaseSnapshot {

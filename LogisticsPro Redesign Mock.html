@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LogisticsPro — Move India Faster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;800&family=Manrope:wght@400;500;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#06080a;--bg2:#0d1114;--ink:#eef2e6;--mut:#7f8a79;--volt:#c8ff2e;--hot:#ff5a1f;--ok:#3ddc84;--line:rgba(255,255,255,.1);color-scheme:dark;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+html{scroll-padding-top:env(safe-area-inset-top,0px);scroll-behavior:smooth}
+*,*::before,*::after{box-sizing:inherit;margin:0}
+body{background:var(--bg);color:var(--ink);font:400 16px/1.6 Manrope,system-ui,sans-serif;overflow-x:hidden;cursor:none}
+@media(hover:none){body{cursor:auto}.cur{display:none}}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:90;opacity:.07;background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E")}
+a,button,select,input{font:inherit;color:inherit;cursor:none}
+@media(hover:none){a,button,select,input{cursor:auto}}
+.d{font-family:Syne,sans-serif;font-weight:800;line-height:.9;letter-spacing:-.03em;text-transform:uppercase}
+.m{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.page{display:none}.page.on{display:block}
+.wrap{max-width:1280px;margin:0 auto;padding:0 clamp(18px,4vw,48px)}
+/* cursor */
+.cur{position:fixed;left:0;top:0;z-index:200;pointer-events:none;mix-blend-mode:difference}
+.cur i{position:absolute;width:8px;height:8px;margin:-4px;border-radius:50%;background:#fff}
+.cur b{position:absolute;width:38px;height:38px;margin:-19px;border-radius:50%;border:1px solid #fff;transition:width .25s,height .25s,margin .25s}
+.cur.h b{width:70px;height:70px;margin:-35px}
+/* wipe */
+#wipe{position:fixed;inset:0;background:var(--volt);z-index:150;transform:translateX(-101%);pointer-events:none}
+#wipe.go{animation:wipe .8s cubic-bezier(.77,0,.18,1)}
+@keyframes wipe{0%{transform:translateX(-101%)}45%,55%{transform:translateX(0)}100%{transform:translateX(101%)}}
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:16px 28px;border-radius:99px;border:1px solid var(--line);background:none;font-weight:700;transition:background .3s,color .3s,border-color .3s,transform .2s;position:relative}
+.btn.p{background:var(--volt);color:#0a0d05;border-color:var(--volt)}
+.btn:hover{border-color:var(--volt);background:rgba(200,255,46,.1)}.btn.p:hover{background:#fff;border-color:#fff}
+/* nav */
+nav.top{position:fixed;top:0;left:0;right:0;z-index:50;padding:calc(18px + env(safe-area-inset-top,0px)) 0 18px;transition:background .4s,backdrop-filter .4s}
+nav.top.s{background:rgba(6,8,10,.7);backdrop-filter:blur(14px)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font:800 1.2rem Syne;letter-spacing:-.02em;text-decoration:none;display:flex;align-items:center;gap:10px}
+.logo s{width:14px;height:14px;background:var(--volt);transform:rotate(45deg);animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(405deg)}}
+.links{display:flex;gap:32px}.links a{text-decoration:none;color:var(--mut);transition:color .2s}.links a:hover{color:var(--ink)}
+@media(max-width:760px){.links{display:none}}
+/* hero */
+.hero{min-height:100vh;position:relative;display:flex;align-items:center;overflow:hidden;padding:120px 0 80px}
+.hero canvas{position:absolute;right:-6%;top:0;width:68%;height:100%;opacity:.95}
+@media(max-width:900px){.hero canvas{width:100%;right:0;opacity:.35}}
+.hero::before{content:"";position:absolute;width:60vw;height:60vw;left:-20vw;bottom:-30vw;background:radial-gradient(circle,rgba(200,255,46,.18),transparent 60%);animation:drift 12s ease-in-out infinite alternate}
+@keyframes drift{to{transform:translate(8vw,-6vw) scale(1.2)}}
+.hero h1{font-size:clamp(3.6rem,13.5vw,12rem);position:relative}
+.ln{display:block;overflow:hidden;padding-bottom:.06em}.ln>span{display:block;transform:translateY(110%);animation:up 1.1s cubic-bezier(.2,.9,.2,1) forwards}
+.ln:nth-child(2)>span{animation-delay:.12s}.ln:nth-child(3)>span{animation-delay:.24s}
+@keyframes up{to{transform:none}}
+.ol{color:transparent;-webkit-text-stroke:2px var(--ink)}.v{color:var(--volt)}
+.hero p.lead{max-width:460px;margin:32px 0;color:#b7c1ae;font-size:1.15rem;opacity:0;animation:fade 1s .8s forwards}
+.hero .cta{display:flex;gap:14px;flex-wrap:wrap;opacity:0;animation:fade 1s 1s forwards}
+@keyframes fade{to{opacity:1}}
+.feed{position:absolute;left:clamp(18px,4vw,48px);bottom:28px;display:flex;flex-direction:column;gap:6px}
+.feed div{animation:fade .5s both;display:flex;gap:10px;align-items:center}
+.dot{width:8px;height:8px;border-radius:50%;background:var(--ok);box-shadow:0 0 0 0 var(--ok);animation:ping 1.8s infinite;flex:none}
+@keyframes ping{70%{box-shadow:0 0 0 10px transparent}}
+.scrollcue{position:absolute;right:clamp(18px,4vw,48px);bottom:28px;writing-mode:vertical-rl}
+/* marquee */
+.mq{border-block:1px solid var(--line);overflow:hidden;padding:22px 0;background:var(--bg2)}
+.mq div{display:flex;gap:48px;width:max-content;animation:mq 30s linear infinite;font:800 clamp(1.6rem,4vw,3rem) Syne;text-transform:uppercase;white-space:nowrap}
+.mq span:nth-child(even){color:transparent;-webkit-text-stroke:1px var(--mut)}
+.mq:hover div{animation-play-state:paused}
+@keyframes mq{to{transform:translateX(-50%)}}
+/* sections */
+section.sec{padding:clamp(70px,12vw,150px) 0}
+.h2{font-size:clamp(2.4rem,7vw,6rem);margin-bottom:40px}
+.rv{opacity:0;transform:translateY(50px);transition:opacity .9s,transform .9s cubic-bezier(.2,.9,.2,1)}.rv.in{opacity:1;transform:none}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));border-top:1px solid var(--line)}
+.stats>div{padding:36px 24px 36px 0;border-bottom:1px solid var(--line)}
+.stats b{font:800 clamp(3rem,7vw,5.5rem) Syne;display:block;line-height:1;letter-spacing:-.04em}
+.bento{display:grid;grid-template-columns:repeat(6,1fr);gap:16px}
+.card{position:relative;background:var(--bg2);border:1px solid var(--line);border-radius:24px;padding:28px;overflow:hidden;transition:transform .4s,border-color .4s;min-height:230px}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,0),rgba(200,255,46,.14),transparent 60%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover{transform:translateY(-6px);border-color:rgba(200,255,46,.4)}.card:hover::before{opacity:1}
+.card h3{font:800 1.6rem Syne;letter-spacing:-.02em;margin:10px 0}.card p{color:var(--mut);max-width:380px}
+.c1{grid-column:span 4}.c2{grid-column:span 2}.c3{grid-column:span 2}.c4{grid-column:span 2}.c5{grid-column:span 2}
+@media(max-width:900px){.bento>*{grid-column:span 6!important}}
+.lanes{position:absolute;right:0;bottom:0;left:0;height:90px}
+.lanes i{position:absolute;height:3px;width:60px;border-radius:3px;background:linear-gradient(90deg,transparent,var(--volt));animation:lane 3s linear infinite}
+@keyframes lane{from{transform:translateX(-80px)}to{transform:translateX(900px)}}
+.path svg{width:100%;height:90px;margin-top:18px}.path path{fill:none;stroke:var(--volt);stroke-width:3;stroke-dasharray:400;stroke-dashoffset:400;animation:dash 3s ease-in-out infinite}
+@keyframes dash{60%,100%{stroke-dashoffset:0}}
+.bar{height:8px;background:rgba(255,255,255,.08);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;width:0;border-radius:9px;background:var(--c,var(--volt));transition:width 1.6s cubic-bezier(.2,.9,.2,1)}.in .bar i,.on .bar i{width:var(--w)}
+.chip{display:inline-block;padding:4px 12px;border-radius:99px;border:1px solid var(--line);font:700 .72rem 'JetBrains Mono';text-transform:uppercase}
+.engine{display:grid;grid-template-columns:1fr 1.3fr;gap:40px;align-items:center}
+@media(max-width:900px){.engine{grid-template-columns:1fr}}
+.engine canvas,.mapbox canvas{width:100%;height:100%;display:block}
+.engine .mapbox{height:min(70vh,620px);border:1px solid var(--line);border-radius:28px;background:var(--bg2);overflow:hidden}
+.big{font:800 clamp(2rem,4vw,3.2rem) Syne;color:var(--volt);letter-spacing:-.03em}
+.cta2{text-align:center;background:var(--volt);color:#0a0d05;border-radius:36px;padding:clamp(50px,9vw,120px) 24px;overflow:hidden}
+.cta2 h2{font-size:clamp(2.6rem,9vw,8rem);margin-bottom:30px}.cta2 .btn{background:#0a0d05;color:var(--volt);border-color:#0a0d05}
+footer{padding:50px 0;border-top:1px solid var(--line);margin-top:80px}
+/* login */
+.login{min-height:100vh;display:grid;grid-template-columns:1.1fr 1fr}
+@media(max-width:900px){.login{grid-template-columns:1fr}.login .vis{display:none}}
+.vis{position:relative;background:var(--bg2);border-right:1px solid var(--line);overflow:hidden}
+.vis canvas{position:absolute;inset:0;width:100%;height:100%}
+.vis h2{position:absolute;left:40px;bottom:40px;font-size:clamp(2.4rem,5vw,4.5rem);z-index:2}
+.form{display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,6vw,80px);gap:20px;max-width:560px;margin:auto;width:100%}
+.roles{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.roles button{padding:12px;border:1px solid var(--line);border-radius:14px;background:none;text-transform:capitalize;font-weight:700;transition:.25s}
+.roles button.a{background:var(--volt);color:#0a0d05;border-color:var(--volt);transform:translateY(-3px)}
+.fld{position:relative}.fld input{width:100%;background:none;border:0;border-bottom:1px solid var(--line);padding:22px 0 8px;outline:0;font-size:1.05rem;transition:border-color .3s}
+.fld input:focus{border-color:var(--volt)}.fld label{position:absolute;left:0;top:22px;color:var(--mut);transition:.25s;pointer-events:none}
+.fld input:focus+label,.fld input:not(:placeholder-shown)+label{top:0;font-size:.72rem;color:var(--volt)}
+/* app shell */
+.shell{display:none;min-height:100vh}.shell.on{display:grid;grid-template-columns:250px 1fr}
+aside{position:sticky;top:0;height:100vh;border-right:1px solid var(--line);padding:26px 18px;display:flex;flex-direction:column;gap:6px;background:var(--bg)}
+aside .logo{margin:0 10px 30px}
+aside a{display:flex;align-items:center;gap:12px;padding:13px 14px;border-radius:14px;text-decoration:none;color:var(--mut);transition:.25s;position:relative}
+aside a:hover{color:var(--ink);background:rgba(255,255,255,.05);transform:translateX(4px)}
+aside a.a{background:var(--volt);color:#0a0d05;font-weight:700}
+aside .sp{flex:1}
+@media(max-width:800px){.shell.on{display:block;padding-bottom:78px}aside{position:fixed;top:auto;bottom:0;left:0;right:0;height:auto;z-index:60;flex-direction:row;justify-content:space-around;padding:10px 10px calc(10px + env(safe-area-inset-bottom,0px));border-right:0;border-top:1px solid var(--line)}aside .logo,aside .sp,aside a span{display:none}}
+main.ap{padding:clamp(18px,3vw,40px);min-width:0}
+.hd{display:flex;justify-content:space-between;align-items:end;gap:20px;flex-wrap:wrap;margin-bottom:30px}.hd h1{font-size:clamp(2rem,5vw,4rem)}
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:14px}
+.kpi{background:var(--bg2);border:1px solid var(--line);border-radius:22px;padding:22px;position:relative;overflow:hidden}
+.kpi b{font:800 2.8rem Syne;letter-spacing:-.03em;display:block;line-height:1.1}
+.kpi svg{position:absolute;right:0;bottom:0;width:55%;height:50px;opacity:.9}.kpi polyline{fill:none;stroke:var(--volt);stroke-width:2;stroke-dasharray:300;stroke-dashoffset:300;transition:stroke-dashoffset 2s}.in polyline,.on polyline{stroke-dashoffset:0}
+.grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:14px;margin-bottom:14px}
+@media(max-width:1000px){.grid2{grid-template-columns:1fr}}
+.panel{background:var(--bg2);border:1px solid var(--line);border-radius:24px;padding:24px;min-width:0}
+.panel h3{font:800 1.1rem Syne;text-transform:uppercase;margin-bottom:16px;display:flex;justify-content:space-between;align-items:center}
+.cap{display:grid;grid-template-columns:130px 1fr 44px;gap:14px;align-items:center;padding:9px 0;font-size:.9rem}
+.log{max-height:300px;overflow:hidden;display:flex;flex-direction:column;gap:10px}.log div{padding:10px 12px;border-left:2px solid var(--volt);background:rgba(255,255,255,.03);border-radius:0 12px 12px 0;animation:slide .6s both;font-size:.88rem}
+@keyframes slide{from{opacity:0;transform:translateX(-24px)}}
+.mini{height:340px;padding:0;overflow:hidden;position:relative}.mini canvas{width:100%;height:100%;display:block}
+/* tracking */
+.trk{display:grid;grid-template-columns:320px 1fr;gap:14px}
+@media(max-width:1000px){.trk{grid-template-columns:1fr}}
+.ctl{display:flex;flex-direction:column;gap:16px}
+.ctl select{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:13px;outline:0}
+.ctl label{display:block;margin-bottom:6px}
+.bigmap{height:min(72vh,640px);padding:0;overflow:hidden;position:relative}.bigmap canvas{width:100%;height:100%;display:block}
+.hud{position:absolute;left:18px;top:18px;right:18px;display:flex;gap:12px;flex-wrap:wrap;pointer-events:none}
+.hud div{background:rgba(6,8,10,.75);backdrop-filter:blur(10px);border:1px solid var(--line);border-radius:16px;padding:10px 16px}.hud b{display:block;font:800 1.5rem Syne}
+.ord{display:grid;grid-template-columns:90px 1fr 90px;gap:12px;align-items:center;padding:12px 0;border-bottom:1px solid var(--line)}
+/* table */
+.tw{overflow-x:auto}table{width:100%;border-collapse:collapse;min-width:640px}th{text-align:left;padding:12px;border-bottom:1px solid var(--line)}td{padding:14px 12px;border-bottom:1px solid var(--line);transition:background .2s}tr:hover td{background:rgba(200,255,46,.05)}
+tbody tr{animation:slide .5s both}
+.srch{width:100%;max-width:420px;background:var(--bg2);border:1px solid var(--line);border-radius:99px;padding:13px 22px;outline:0}.srch:focus{border-color:var(--volt)}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01s!important;transition-duration:.01s!important}}
+</style>
+</head>
+<body>
+<div class="cur"><i></i><b></b></div><div id="wipe"></div>
+
+<!-- HOME -->
+<div class="page" id="p-home">
+<nav class="top"><div class="wrap"><a class="logo" href="#home"><s></s>LOGISTICS//PRO</a>
+<div class="links"><a href="#" data-go="platform">Platform</a><a href="#" data-go="engine">Engine</a><a href="#" data-go="stats">Network</a></div>
+<a class="btn" href="#login" style="padding:11px 22px">Sign in</a></div></nav>
+
+<header class="hero"><canvas id="cv-hero"></canvas>
+<div class="wrap" style="position:relative;width:100%">
+<p class="m" style="margin-bottom:18px"><span class="v">●</span> 14 hubs online · Pan-India</p>
+<h1 class="d"><span class="ln"><span>Move</span></span><span class="ln"><span class="ol">India</span></span><span class="ln"><span class="v">Faster.</span></span></h1>
+<p class="lead">One shortest-path engine. Every truck, every hub, every SKU — live on a single map.</p>
+<div class="cta"><a class="btn p" href="#login" data-mag>Launch console →</a><a class="btn" href="#" data-go="engine" data-mag>Watch the engine</a></div></div>
+<div class="feed m" id="feed"></div><div class="scrollcue m">Scroll ↓</div></header>
+
+<div class="mq"><div id="mq"></div></div>
+
+<section class="sec" id="stats"><div class="wrap"><h2 class="h2 d rv">The network,<br><span class="ol">in numbers</span></h2>
+<div class="stats rv"><div><b data-count="14">0</b><span class="m">Freight hubs</span></div><div><b data-count="44">0</b><span class="m">Live SKUs tracked</span></div><div><b data-count="98" data-suf="%">0</b><span class="m">On-time dispatch</span></div><div><b data-count="3">0</b><span class="m">Role-based portals</span></div></div>
+<p class="m" style="margin-top:14px">Demo data for design mock</p></div></section>
+
+<section class="sec" id="platform" style="padding-top:0"><div class="wrap"><h2 class="h2 d rv">Built to<br><span class="v">never stand still</span></h2>
+<div class="bento">
+<div class="card c1 rv"><span class="chip">Live map</span><h3>Every truck. Right now.</h3><p>Leaflet-grade tracking, rebuilt as a living network. Watch freight flow across 14 hubs in real time.</p><div class="lanes"><i style="bottom:14px"></i><i style="bottom:36px;animation-delay:-1s;width:90px"></i><i style="bottom:58px;animation-delay:-2s"></i></div></div>
+<div class="card c2 rv path"><span class="chip">Dijkstra</span><h3>Shortest path, instantly.</h3><svg viewBox="0 0 300 90"><path d="M10 70 C60 70 60 20 110 30 S170 80 210 50 S270 20 290 20"/></svg></div>
+<div class="card c3 rv"><span class="chip">Capacity</span><h3>Hub load</h3><div class="bar" style="margin:12px 0"><i style="--w:42%"></i></div><div class="bar" style="margin:12px 0"><i style="--w:78%;--c:var(--hot)"></i></div><div class="bar"><i style="--w:93%;--c:#ff2d55"></i></div></div>
+<div class="card c4 rv"><span class="chip">Access</span><h3>Three portals</h3><p>Admin, manager, customer — each with its own cockpit.</p></div>
+<div class="card c5 rv"><span class="chip">Data</span><h3>MySQL + MongoDB</h3><p>Relational truth, document-grade audit trails.</p></div>
+</div></div></section>
+
+<section class="sec" id="engine" style="padding-top:0"><div class="wrap engine">
+<div class="rv"><span class="m">Routing engine</span><h2 class="h2 d" style="margin:12px 0 24px">Watch it<br><span class="ol">think.</span></h2><p style="color:var(--mut);margin-bottom:24px">Pick any two hubs. The engine weighs every highway edge and lights up the cheapest path.</p>
+<div class="big" id="eng-r">—</div><div class="m" id="eng-d" style="margin-top:8px">calculating…</div></div>
+<div class="mapbox rv"><canvas id="cv-eng"></canvas></div></div></section>
+
+<section class="sec" style="padding-top:0"><div class="wrap"><div class="cta2 rv"><h2 class="d">Ship smarter<br>today.</h2><a class="btn" href="#login" data-mag>Enter the console →</a></div>
+<footer class="m" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px"><span>© 2026 LogisticsPro</span><span>React · Node · MySQL · MongoDB</span></footer></div></section>
+</div>
+
+<!-- LOGIN -->
+<div class="page" id="p-login"><div class="login">
+<div class="vis"><canvas id="cv-login"></canvas><a class="logo" href="#home" style="position:absolute;left:40px;top:32px;z-index:2"><s></s>LOGISTICS//PRO</a><h2 class="d">Your<br><span class="v">fleet</span><br>awaits.</h2></div>
+<form class="form" id="lf"><span class="m">Sign in</span><h1 class="d" style="font-size:3rem">Welcome back</h1>
+<div class="roles" id="roles"><button type="button" class="a">customer</button><button type="button">manager</button><button type="button">admin</button></div>
+<div class="fld"><input id="em" placeholder=" " autocomplete="off"><label>Email</label></div>
+<div class="fld"><input id="pw" type="password" placeholder=" "><label>Password</label></div>
+<button class="btn p" data-mag style="justify-content:center">Enter console →</button>
+<p class="m">Demo logins autofill when you pick a role · <a href="#home" style="color:var(--volt)">Back home</a></p></form></div></div>
+
+<!-- APP SHELL -->
+<div class="shell" id="shell">
+<aside><a class="logo" href="#home"><s></s>LOGISTICS</a>
+<a href="#dashboard" data-n="dashboard">▦ <span>Dashboard</span></a><a href="#tracking" data-n="tracking">◎ <span>Live tracking</span></a><a href="#inventory" data-n="inventory">▤ <span>Inventory</span></a><div class="sp"></div><a href="#home">↩ <span>Log out</span></a></aside>
+<main class="ap">
+
+<div class="page" id="p-dashboard">
+<div class="hd"><div><span class="m"><span class="dot" style="display:inline-block;margin-right:8px"></span>Facility manager portal</span><h1 class="d">Operations<br><span class="v">live</span></h1></div><a class="btn p" href="#tracking" data-mag>+ Dispatch order</a></div>
+<div class="kpis">
+<div class="kpi"><span class="m">Warehouses</span><b data-count="14">0</b><svg viewBox="0 0 100 40"><polyline points="0,30 20,24 40,28 60,14 80,18 100,6"/></svg></div>
+<div class="kpi"><span class="m">Inventory SKUs</span><b data-count="44">0</b><svg viewBox="0 0 100 40"><polyline points="0,20 20,30 40,16 60,22 80,8 100,12"/></svg></div>
+<div class="kpi"><span class="m">Active orders</span><b id="ao">4</b><svg viewBox="0 0 100 40"><polyline points="0,34 25,28 50,30 75,12 100,16"/></svg></div>
+<div class="kpi"><span class="m">Capacity used</span><b data-count="68" data-suf="%">0</b><svg viewBox="0 0 100 40"><polyline points="0,10 30,18 55,14 80,26 100,22"/></svg></div></div>
+<div class="grid2"><div class="panel mini"><canvas id="cv-mini"></canvas></div>
+<div class="panel"><h3>Activity <span class="chip" style="color:var(--ok)">● live</span></h3><div class="log" id="log"></div></div></div>
+<div class="panel"><h3>Hub capacity</h3><div id="caps"></div></div></div>
+
+<div class="page" id="p-tracking">
+<div class="hd"><div><span class="m">Dijkstra routing</span><h1 class="d">Live<br><span class="v">tracking</span></h1></div></div>
+<div class="trk"><div class="panel ctl"><div><label class="m">From</label><select id="s-a"></select></div><div><label class="m">To</label><select id="s-b"></select></div>
+<p class="m">…or click two hubs on the map</p><button class="btn p" id="go" data-mag style="justify-content:center">Dispatch →</button><div id="res" class="m" style="line-height:1.9"></div></div>
+<div class="panel bigmap"><canvas id="cv-big"></canvas><div class="hud"><div><span class="m">Distance</span><b id="h-d">—</b></div><div><span class="m">ETA</span><b id="h-e">—</b></div><div><span class="m">Progress</span><b id="h-p">0%</b></div></div></div></div>
+<div class="panel" style="margin-top:14px"><h3>Dispatch queue</h3><div id="q"></div></div></div>
+
+<div class="page" id="p-inventory">
+<div class="hd"><div><span class="m">Stock control</span><h1 class="d">Inventory<br><span class="v">&amp; stock</span></h1></div><input class="srch" id="sr" placeholder="Search SKU, product, city…"></div>
+<div class="panel tw"><table><thead class="m"><tr><th>SKU</th><th>Product</th><th>Hub</th><th>Stock level</th><th>Qty</th><th>Status</th></tr></thead><tbody id="tb"></tbody></table></div></div>
+</main></div>
+
+<script>
+const $=s=>document.querySelector(s),$$=s=>[...document.querySelectorAll(s)],R=n=>Math.floor(Math.random()*n);
+const C=[['Delhi',77.2,28.6],['Mumbai',72.9,19.1],['Pune',73.9,18.5],['Kolhapur',74.2,16.7],['Bengaluru',77.6,13],['Chennai',80.3,13.1],['Hyderabad',78.5,17.4],['Kolkata',88.4,22.6],['Ahmedabad',72.6,23],['Jaipur',75.8,26.9],['Lucknow',80.9,26.8],['Chandigarh',76.8,30.7],['Indore',75.9,22.7],['Kochi',76.3,9.9]];
+const N=C.map(c=>c[0]);
+const E="Delhi-Chandigarh,Delhi-Jaipur,Delhi-Lucknow,Jaipur-Ahmedabad,Jaipur-Indore,Ahmedabad-Mumbai,Ahmedabad-Indore,Indore-Mumbai,Indore-Hyderabad,Mumbai-Pune,Pune-Kolhapur,Pune-Hyderabad,Kolhapur-Bengaluru,Bengaluru-Chennai,Bengaluru-Hyderabad,Bengaluru-Kochi,Chennai-Hyderabad,Chennai-Kochi,Hyderabad-Kolkata,Lucknow-Kolkata,Lucknow-Indore".split(',').map(e=>e.split('-').map(n=>N.indexOf(n)));
+const OUT=[[74,34.5],[77,35.5],[79,33],[78.5,31],[81,30],[80,28.5],[84,27.5],[88,27],[88.5,28],[92,27],[96,28.2],[97,27],[95,25],[93,22],[92,24],[90,22],[89,21.7],[87,21.5],[85,19.5],[82,16.5],[80.3,15],[80.3,13],[79.8,10.3],[78,8.3],[77.5,8.1],[76.3,9.5],[75,12],[74,15],[72.8,19],[72.7,21],[70.5,20.8],[69,22.3],[70.5,23.3],[68.2,23.7],[69.5,25.5],[70,27.5],[72,29],[74.5,31],[74,32.5]];
+const km=(a,b)=>{const r=x=>x*Math.PI/180,dl=r(b[2]-a[2]),dg=r(b[1]-a[1]),h=Math.sin(dl/2)**2+Math.cos(r(a[2]))*Math.cos(r(b[2]))*Math.sin(dg/2)**2;return 2*6371*Math.asin(Math.sqrt(h))*1.28};
+const W=C.map(()=>[]);E.forEach(([a,b])=>{const d=km([0,C[a][1],C[a][2]],[0,C[b][1],C[b][2]]);W[a].push([b,d]);W[b].push([a,d])});
+function dijk(s,t){const D=C.map(()=>1e9),P=[],Q=new Set(C.map((_,i)=>i));D[s]=0;while(Q.size){let u=-1;Q.forEach(i=>{if(u<0||D[i]<D[u])u=i});Q.delete(u);if(u==t)break;W[u].forEach(([v,w])=>{if(D[u]+w<D[v]){D[v]=D[u]+w;P[v]=u}})}const p=[];for(let x=t;x!=null;x=P[x]){p.unshift(x);if(x==s)break}return{path:p,dist:Math.round(D[t])}}
+
+class NM{constructor(cv,o={}){this.cv=cv;this.x=cv.getContext('2d');this.o=o;this.tr=[];this.rt=null;this.hv=-1;new ResizeObserver(()=>this.rs()).observe(cv);
+ if(o.pick){cv.onmousemove=e=>{this.hv=this.near(e);cv.style.cursor=this.hv>=0?'pointer':''};cv.onclick=e=>{const i=this.near(e);if(i>=0)o.pick(i)}}
+ for(let i=0;i<(o.amb||0);i++)this.spawn(Math.random());requestAnimationFrame(t=>this.f(t))}
+ rs(){const r=this.cv.getBoundingClientRect(),d=devicePixelRatio||1;this.w=r.width;this.h=r.height;this.cv.width=r.width*d;this.cv.height=r.height*d;this.x.setTransform(d,0,0,d,0,0);const p=this.o.pad??34,s=Math.min((this.w-2*p)/(29*.92),(this.h-2*p)/28);this.s=s;this.ox=(this.w-29*.92*s)/2;this.oy=(this.h-28*s)/2}
+ P(lo,la){return[this.ox+(lo-68.5)*.92*this.s,this.oy+(35.8-la)*this.s]}
+ N(i){return this.P(C[i][1],C[i][2])}
+ near(e){const r=this.cv.getBoundingClientRect(),x=e.clientX-r.left,y=e.clientY-r.top;let b=-1,m=22;C.forEach((_,i)=>{const[a,c]=this.N(i),d=Math.hypot(a-x,c-y);if(d<m){m=d;b=i}});return b}
+ spawn(d,from){let a=from??R(14),b;do b=R(14);while(b==a);this.tr.push({p:dijk(a,b).path,d:d||0,v:.045+Math.random()*.06})}
+ at(path,f){const P=path.map(i=>this.N(i)),L=[0];for(let i=1;i<P.length;i++)L[i]=L[i-1]+Math.hypot(P[i][0]-P[i-1][0],P[i][1]-P[i-1][1]);let t=f*L[L.length-1],i=1;while(i<P.length-1&&L[i]<t)i++;const k=(t-L[i-1])/((L[i]-L[i-1])||1);return{x:P[i-1][0]+(P[i][0]-P[i-1][0])*k,y:P[i-1][1]+(P[i][1]-P[i-1][1])*k,a:Math.atan2(P[i][1]-P[i-1][1],P[i][0]-P[i-1][0]),P,L,t}}
+ run(path,dur,tick){this.rt={p:path,t0:performance.now(),dur,tick,f:0}}
+ f(now){requestAnimationFrame(t=>this.f(t));if(!this.cv.offsetParent)return;const x=this.x,T=now/1000;x.clearRect(0,0,this.w,this.h);
+ x.beginPath();OUT.forEach((p,i)=>{const[a,b]=this.P(...p);i?x.lineTo(a,b):x.moveTo(a,b)});x.closePath();x.fillStyle='rgba(200,255,46,.035)';x.fill();x.strokeStyle='rgba(200,255,46,.28)';x.lineWidth=1.2;x.setLineDash([4,6]);x.lineDashOffset=-T*8;x.stroke();x.setLineDash([]);
+ x.strokeStyle='rgba(255,255,255,.13)';x.lineWidth=1;E.forEach(([a,b])=>{x.beginPath();x.moveTo(...this.N(a));x.lineTo(...this.N(b));x.stroke()});
+ const rt=this.rt;let rp=0;
+ if(rt){rp=Math.min(1,(now-rt.t0)/rt.dur);const q=this.at(rt.p,rp);x.lineCap='round';x.lineWidth=2;x.strokeStyle='rgba(200,255,46,.35)';x.setLineDash([3,7]);x.beginPath();q.P.forEach((p,i)=>i?x.lineTo(...p):x.moveTo(...p));x.stroke();x.setLineDash([]);
+  x.strokeStyle='#c8ff2e';x.lineWidth=4;x.shadowColor='#c8ff2e';x.shadowBlur=18;x.beginPath();x.moveTo(...q.P[0]);for(let i=1;i<q.P.length&&q.L[i]<q.t;i++)x.lineTo(...q.P[i]);x.lineTo(q.x,q.y);x.stroke();x.shadowBlur=0;this.truck(q,'#fff');if(rt.tick)rt.tick(rp)}
+ this.tr.forEach((t,i)=>{t.d+=t.v/60;if(t.d>=1){const e=t.p[t.p.length-1];this.tr.splice(i,1);this.spawn(0,e);return}const q=this.at(t.p,t.d);x.strokeStyle='rgba(200,255,46,.5)';x.lineWidth=2;x.beginPath();const b=this.at(t.p,Math.max(0,t.d-.05));x.moveTo(b.x,b.y);x.lineTo(q.x,q.y);x.stroke();this.truck(q,'#c8ff2e')});
+ C.forEach((c,i)=>{const[a,b]=this.N(i),on=rt&&rt.p.includes(i),h=this.hv==i,big=this.o.labels||h||on,pu=(Math.sin(T*2+i)+1)/2;
+  x.beginPath();x.arc(a,b,6+pu*9,0,7);x.fillStyle=`rgba(200,255,46,${.12*(1-pu)})`;x.fill();
+  x.beginPath();x.arc(a,b,on||h?6:3.5,0,7);x.fillStyle=on||h?'#c8ff2e':'#eef2e6';x.shadowColor='#c8ff2e';x.shadowBlur=on||h?16:0;x.fill();x.shadowBlur=0;
+  if(big){x.font='700 11px JetBrains Mono';x.fillStyle=on||h?'#c8ff2e':'#9aa593';x.fillText(c[0].toUpperCase(),a+10,b+4)}})}
+ truck(q,c){const x=this.x;x.save();x.translate(q.x,q.y);x.rotate(q.a);x.fillStyle=c;x.shadowColor=c;x.shadowBlur=14;x.fillRect(-7,-4,14,8);x.fillStyle='#06080a';x.fillRect(3,-3,3,6);x.restore()}}
+
+/* router */
+const app=['dashboard','tracking','inventory'];let cur='';
+function show(h){const pg=(h||'home').replace('#','');const id=['home','login',...app].includes(pg)?pg:'home';
+ if(id==cur)return;const first=!cur;cur=id;const w=$('#wipe');if(!first){w.classList.remove('go');void w.offsetWidth;w.classList.add('go')}
+ setTimeout(()=>{$$('.page.on').forEach(p=>p.classList.remove('on'));const inApp=app.includes(id);$('#shell').classList.toggle('on',inApp);$('#p-'+id).classList.add('on');
+  $$('aside a[data-n]').forEach(a=>a.classList.toggle('a',a.dataset.n==id));scrollTo(0,0);document.title='LogisticsPro — '+id[0].toUpperCase()+id.slice(1);
+  $$('.rv,.kpi,.panel').forEach(e=>e.classList.remove('in'));setTimeout(watch,60)},first?0:420)}
+addEventListener('hashchange',()=>show(location.hash));
+$$('[data-go]').forEach(a=>a.onclick=e=>{e.preventDefault();document.getElementById(a.dataset.go).scrollIntoView()});
+addEventListener('scroll',()=>$('nav.top').classList.toggle('s',scrollY>40),{passive:true});
+
+/* reveal + counters */
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting&&!e.target.classList.contains('in')){e.target.classList.add('in');e.target.querySelectorAll('[data-count]').forEach(cnt)}}),{threshold:.15});
+function watch(){$$('.rv,.kpi,.panel').forEach(e=>{e.classList.remove('in');io.unobserve(e);io.observe(e)})}
+function cnt(el){const t=+el.dataset.count,s=el.dataset.suf||'',t0=performance.now();(function u(n){const p=Math.min(1,(n-t0)/1600);el.textContent=Math.round(t*(1-Math.pow(1-p,4)))+s;if(p<1)requestAnimationFrame(u)})(t0)}
+$$('.kpi [data-count]').forEach(el=>io.observe(el.parentElement));
+
+/* cursor, spotlight, magnetic */
+const cu=$('.cur');let mx=0,my=0,rx=0,ry=0;addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cu.querySelector('i').style.transform=`translate(${mx}px,${my}px)`;const c=e.target.closest('.card');if(c){const r=c.getBoundingClientRect();c.style.setProperty('--mx',e.clientX-r.left+'px');c.style.setProperty('--my',e.clientY-r.top+'px')}cu.classList.toggle('h',!!e.target.closest('a,button,select,[data-mag]'))});
+(function l(){rx+=(mx-rx)*.18;ry+=(my-ry)*.18;cu.querySelector('b').style.transform=`translate(${rx}px,${ry}px)`;requestAnimationFrame(l)})();
+document.addEventListener('mousemove',e=>$$('[data-mag]').forEach(b=>{const r=b.getBoundingClientRect(),dx=e.clientX-(r.left+r.width/2),dy=e.clientY-(r.top+r.height/2),d=Math.hypot(dx,dy);b.style.transform=d<90?`translate(${dx*.25}px,${dy*.35}px)`:''}));
+
+/* content */
+$('#mq').innerHTML=[...N,...N].map(n=>`<span>${n}</span>`).join('');
+const MSG=['TRK-4821 Pune → Hyderabad','TRK-1107 Delhi → Jaipur','TRK-9034 Chennai → Kochi','TRK-2276 Mumbai → Indore','TRK-7712 Kolkata → Lucknow'];
+setInterval(()=>{const f=$('#feed');f.insertAdjacentHTML('afterbegin',`<div><span class="dot"></span>${MSG[R(5)]} · on time</div>`);while(f.children.length>3)f.lastChild.remove()},2200);
+new NM($('#cv-hero'),{amb:9,labels:false});new NM($('#cv-login'),{amb:8,labels:true});new NM($('#cv-mini'),{amb:6,labels:true,pad:20});
+const eng=new NM($('#cv-eng'),{labels:true});
+(function demo(){const a=R(14);let b;do b=R(14);while(b==a);const r=dijk(a,b);eng.run(r.path,4200);$('#eng-r').textContent=N[a]+' → '+N[b];$('#eng-d').textContent=r.dist.toLocaleString()+' km · '+r.path.length+' hubs · via '+r.path.slice(1,-1).map(i=>N[i]).join(' › ')||'direct';setTimeout(demo,6200)})();
+
+/* login */
+$$('#roles button').forEach(b=>b.onclick=()=>{$$('#roles button').forEach(x=>x.classList.remove('a'));b.classList.add('a');$('#em').value=b.textContent+'@logistics.com';$('#pw').value=b.textContent+'123'});
+$('#lf').onsubmit=e=>{e.preventDefault();location.hash='dashboard'};
+
+/* dashboard */
+const HUB=[['Delhi NCR Mega Fulfillment',92],['Mumbai Hub',78],['Pune Hub',64],['Bengaluru Hub',71],['Chennai Hub',55],['Kolkata Hub',83],['Hyderabad Hub',47],['Ahmedabad Hub',38]];
+$('#caps').innerHTML=HUB.map(([n,v])=>`<div class="cap"><span style="font-size:.82rem">${n}</span><div class="bar"><i style="--w:${v}%;--c:${v>90?'#ff2d55':v>=70?'var(--hot)':'var(--ok)'}"></i></div><span class="m">${v}%</span></div>`).join('');
+const LG=['Order #2041 dispatched · Pune → Hyderabad','Inventory updated · 480 units ARM64 chips','Route recalculated · Delhi → Kochi','Hub Kolkata reached 83% capacity','Order #2038 delivered · Jaipur','New manager login · Mumbai Hub'];
+function lg(){$('#log').insertAdjacentHTML('afterbegin',`<div>${LG[R(6)]}<br><span class="m">${new Date().toLocaleTimeString()}</span></div>`);while($('#log').children.length>5)$('#log').lastChild.remove()}
+lg();lg();lg();setInterval(()=>{lg();$('#ao').textContent=3+R(5)},3000);
+
+/* tracking */
+const opt=N.map((n,i)=>`<option value="${i}">${n}</option>`).join('');$('#s-a').innerHTML=opt;$('#s-b').innerHTML=opt;$('#s-a').value=0;$('#s-b').value=13;
+let pk=0;const big=new NM($('#cv-big'),{labels:true,pick:i=>{if(pk++%2==0)$('#s-a').value=i;else{$('#s-b').value=i;$('#go').click()}}});
+$('#go').onclick=()=>{const a=+$('#s-a').value,b=+$('#s-b').value;if(a==b)return;const r=dijk(a,b),dur=Math.max(5000,r.dist*5),eta=r.dist/55;
+ $('#h-d').textContent=r.dist.toLocaleString()+' km';$('#h-e').textContent=eta.toFixed(1)+' h';
+ $('#res').innerHTML=r.path.map((i,k)=>`<span class="chip" style="margin:2px;${k==0||k==r.path.length-1?'color:var(--volt);border-color:var(--volt)':''}">${N[i]}</span>`).join(' ');
+ big.run(r.path,dur,p=>$('#h-p').textContent=Math.round(p*100)+'%')};
+const ORD=[['#2041','Pune → Hyderabad','High',.62],['#2042','Delhi → Jaipur','Medium',.3],['#2043','Chennai → Kochi','Low',.15],['#2044','Mumbai → Indore','High',.8]];
+function rq(){$('#q').innerHTML=ORD.map(o=>`<div class="ord"><span class="m">${o[0]}</span><div><div style="margin-bottom:6px;font-weight:700">${o[1]}</div><div class="bar"><i style="--w:${o[3]*100}%;--c:${o[2]=='High'?'var(--hot)':'var(--volt)'}"></i></div></div><span class="chip" style="justify-self:end">${o[2]}</span></div>`).join('')}
+rq();setInterval(()=>{ORD.forEach(o=>{o[3]=o[3]>=1?.05:o[3]+.012});if(cur=='tracking')rq()},900);
+
+/* inventory */
+const PR=['Semiconductor Chips','Smart Energy Meters','EV Battery Packs','Solar Inverters','Cotton Textiles','Auto Parts','LED Panels','Medical Kits'],CAT=['Pune','Delhi','Chennai','Mumbai','Kolkata','Bengaluru','Hyderabad','Kochi'];
+const INV=PR.flatMap((p,i)=>[0,1,2].map(k=>{const q=[0,40,320,860,1900][R(5)];return{sku:'SKU-'+(1000+i*3+k),p,h:CAT[(i+k*3)%8],q}}));
+function ri(f=''){$('#tb').innerHTML=INV.filter(r=>(r.sku+r.p+r.h).toLowerCase().includes(f.toLowerCase())).map((r,i)=>{const s=r.q==0?['Out','#ff2d55']:r.q<100?['Low','var(--hot)']:['In stock','var(--ok)'];return`<tr style="animation-delay:${i*25}ms"><td class="m">${r.sku}</td><td style="font-weight:700">${r.p}</td><td>${r.h}</td><td style="width:200px"><div class="bar"><i style="--w:${Math.min(100,r.q/19)}%;--c:${s[1]}"></i></div></td><td class="m">${r.q}</td><td><span class="chip" style="color:${s[1]};border-color:${s[1]}">${s[0]}</span></td></tr>`}).join('');setTimeout(()=>$$('#tb .bar').forEach(b=>b.classList.add('in')),30)}
+ri();$('#sr').oninput=e=>ri(e.target.value);
+
+show(location.hash);watch();
+</script>
+</body>
+</html>

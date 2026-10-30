@@ -1,4 +1,4 @@
-import { Truck, LogOut, Package, LayoutDashboard, User, Database, Map } from 'lucide-react';
+import { Truck, LogOut, Package, LayoutDashboard, User, Database, Map, Car, BarChart3 } from 'lucide-react';
 import { NavLink } from 'react-router-dom';
 import { useLogistics } from '../../contexts/LogisticsContext';
 
@@ -14,6 +14,8 @@ export default function Topbar({ onOpenDispatch }: TopbarProps) {
     { name: 'Warehouses & Map', path: '/map', icon: <Map size={17} /> },
     { name: 'Inventory', path: '/inventory', icon: <Package size={17} /> },
     { name: 'Shipments', path: '/orders', icon: <Truck size={17} /> },
+    { name: 'Fleet', path: '/fleet', icon: <Car size={17} /> },
+    { name: 'Analytics', path: '/analytics', icon: <BarChart3 size={17} /> },
     { name: 'Database Live View', path: '/database-view', icon: <Database size={17} /> },
     { name: 'Profile', path: '/profile', icon: <User size={17} /> },
   ];

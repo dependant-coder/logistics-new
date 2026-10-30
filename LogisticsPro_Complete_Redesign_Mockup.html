@@ -1,0 +1,1332 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>LogisticsPro Enterprise — Complete 1:1 Redesign Mockup</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=Manrope:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#06080a;
+  --bg2:#0d1114;
+  --bg3:#141a20;
+  --ink:#eef2e6;
+  --mut:#7f8a79;
+  --volt:#c8ff2e;
+  --hot:#ff5a1f;
+  --ok:#3ddc84;
+  --cyan:#00f0ff;
+  --line:rgba(255,255,255,.09);
+  color-scheme:dark;
+  box-sizing:border-box;
+}
+*,*::before,*::after{box-sizing:inherit;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink);
+  font:400 15px/1.6 Manrope,system-ui,sans-serif;
+  overflow-x:hidden;
+  cursor:none;
+}
+@media(hover:none){body{cursor:auto}.cur{display:none}}
+
+/* Film Grain Texture */
+body::after{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:90;
+  opacity:.06;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+a,button,select,input{font:inherit;color:inherit;cursor:none}
+@media(hover:none){a,button,select,input{cursor:auto}}
+
+/* Typography */
+.d{font-family:Syne,sans-serif;font-weight:800;line-height:.95;letter-spacing:-.03em;text-transform:uppercase}
+.m{font-family:'JetBrains Mono',monospace;font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut)}
+.v{color:var(--volt)}
+.ol{color:transparent;-webkit-text-stroke:2px var(--ink)}
+
+/* Custom Cursor */
+.cur{position:fixed;left:0;top:0;z-index:300;pointer-events:none;mix-blend-mode:difference}
+.cur i{position:absolute;width:8px;height:8px;margin:-4px;border-radius:50%;background:#fff}
+.cur b{position:absolute;width:38px;height:38px;margin:-19px;border-radius:50%;border:1px solid #fff;transition:width .22s,height .22s,margin .22s}
+.cur.h b{width:64px;height:64px;margin:-32px;background:rgba(200,255,46,.2);border-color:var(--volt)}
+
+/* Page Transition Wipe */
+#wipe{position:fixed;inset:0;background:var(--volt);z-index:250;transform:translateX(-101%);pointer-events:none}
+#wipe.go{animation:wipe .75s cubic-bezier(.77,0,.18,1)}
+@keyframes wipe{0%{transform:translateX(-101%)}45%,55%{transform:translateX(0)}100%{transform:translateX(101%)}}
+
+/* Common Buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;padding:14px 24px;border-radius:99px;border:1px solid var(--line);background:none;font-weight:700;font-size:.88rem;transition:background .3s,color .3s,border-color .3s,transform .2s;text-decoration:none;cursor:none}
+.btn.p{background:var(--volt);color:#0a0d05;border-color:var(--volt)}
+.btn:hover{border-color:var(--volt);background:rgba(200,255,46,.1)}.btn.p:hover{background:#fff;border-color:#fff;transform:translateY(-2px)}
+.btn.sm{padding:8px 16px;font-size:.75rem}
+
+.chip{display:inline-flex;align-items:center;gap:6px;padding:4px 10px;border-radius:99px;border:1px solid var(--line);font:700 .7rem 'JetBrains Mono';text-transform:uppercase}
+.chip.ok{color:var(--ok);border-color:rgba(61,220,132,.3);background:rgba(61,220,132,.08)}
+.chip.hot{color:var(--hot);border-color:rgba(255,90,31,.3);background:rgba(255,90,31,.08)}
+.chip.v{color:var(--volt);border-color:rgba(200,255,46,.3);background:rgba(200,255,46,.08)}
+
+.bar{height:6px;background:rgba(255,255,255,.08);border-radius:6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:6px;background:var(--c,var(--volt));transition:width 1.2s cubic-bezier(.2,.9,.2,1)}
+.bar.on i{width:var(--w)}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:#1e293b;border-radius:4px}
+::-webkit-scrollbar-thumb:hover{background:#334155}
+
+/* Global Nav */
+nav.top{position:fixed;top:0;left:0;right:0;z-index:100;padding:16px 0;transition:background .3s,backdrop-filter .3s}
+nav.top.scrolled{background:rgba(6,8,10,.85);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.wrap{max-width:1380px;margin:0 auto;padding:0 clamp(16px,4vw,40px)}
+nav.top .wrap{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.logo{font:800 1.25rem Syne;letter-spacing:-.02em;text-decoration:none;display:flex;align-items:center;gap:10px;color:var(--ink)}
+.logo s{width:13px;height:13px;background:var(--volt);transform:rotate(45deg);animation:spin 6s linear infinite}
+@keyframes spin{to{transform:rotate(405deg)}}
+
+/* App Shell (Sidebar + Main Viewport) */
+.shell{display:none;min-height:100vh}
+.shell.on{display:grid;grid-template-columns:250px 1fr}
+@media(max-width:960px){
+  .shell.on{display:block;padding-bottom:78px}
+  aside{position:fixed!important;top:auto!important;bottom:0!important;left:0!important;right:0!important;height:auto!important;z-index:120;flex-direction:row!important;justify-content:space-around!important;padding:8px 10px!important;border-right:0!important;border-top:1px solid var(--line);background:rgba(6,8,10,.95)!important;backdrop-filter:blur(14px)}
+  aside .logo-box,aside .sp,aside a span,aside .role-badge{display:none!important}
+  aside a{padding:10px!important}
+}
+aside{position:sticky;top:0;height:100vh;border-right:1px solid var(--line);padding:24px 16px;display:flex;flex-direction:column;gap:5px;background:var(--bg);z-index:80}
+aside .logo-box{padding:6px 12px 24px;border-bottom:1px solid var(--line);margin-bottom:12px}
+aside a{display:flex;align-items:center;gap:12px;padding:12px 14px;border-radius:12px;text-decoration:none;color:var(--mut);transition:.2s;font-size:.88rem;font-weight:600}
+aside a:hover{color:var(--ink);background:rgba(255,255,255,.04);transform:translateX(3px)}
+aside a.active{background:var(--volt);color:#0a0d05;font-weight:700}
+aside .sp{flex:1}
+aside .role-badge{padding:12px;background:var(--bg2);border:1px solid var(--line);border-radius:14px;margin-bottom:8px}
+
+main.view{padding:clamp(18px,3vw,36px);min-width:0}
+.page{display:none}
+.page.on{display:block;animation:fadeIn .4s ease-out}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* Header Banner inside Views */
+.hd{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:28px}
+.hd h1{font-size:clamp(2rem,4vw,3.4rem)}
+
+/* Cards & Bento Grid */
+.grid-bento{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}
+.card{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:24px;position:relative;overflow:hidden;transition:border-color .3s,transform .3s}
+.card:hover{border-color:rgba(200,255,46,.3)}
+.card::before{content:"";position:absolute;inset:0;background:radial-gradient(350px circle at var(--mx,50%) var(--my,0),rgba(200,255,46,.12),transparent 65%);opacity:0;transition:opacity .3s;pointer-events:none}
+.card:hover::before{opacity:1}
+
+/* KPI Cards */
+.kpis{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:14px;margin-bottom:18px}
+.kpi{background:var(--bg2);border:1px solid var(--line);border-radius:20px;padding:22px;position:relative;overflow:hidden}
+.kpi b{font:800 2.6rem Syne;letter-spacing:-.03em;display:block;line-height:1.1;margin-top:4px}
+.kpi svg{position:absolute;right:0;bottom:0;width:55%;height:45px;opacity:.85}
+.kpi polyline{fill:none;stroke:var(--volt);stroke-width:2.5;stroke-dasharray:300;stroke-dashoffset:300;transition:stroke-dashoffset 1.8s}
+.kpi.on polyline{stroke-dashoffset:0}
+
+/* Canvas Viewports */
+.map-canvas-box{width:100%;height:100%;min-height:380px;display:block}
+
+/* Tables */
+.tw{overflow-x:auto}
+table{width:100%;border-collapse:collapse;min-width:680px}
+th{text-align:left;padding:14px 12px;border-bottom:1px solid var(--line);font-size:.72rem}
+td{padding:14px 12px;border-bottom:1px solid var(--line);font-size:.88rem;transition:background .2s}
+tr:hover td{background:rgba(200,255,46,.04)}
+
+/* Modal */
+#dispatch-modal{position:fixed;inset:0;z-index:200;background:rgba(6,8,10,.85);backdrop-filter:blur(8px);display:none;align-items:center;justify-content:center;padding:16px}
+#dispatch-modal.on{display:flex}
+.modal-box{background:var(--bg2);border:1px solid var(--volt);border-radius:24px;max-width:540px;width:100%;padding:32px;box-shadow:0 0 40px -10px rgba(200,255,46,.3)}
+
+/* Search & Inputs */
+.input-dark{width:100%;background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:12px 16px;outline:0;color:var(--ink);transition:border-color .25s}
+.input-dark:focus{border-color:var(--volt)}
+</style>
+</head>
+<body>
+
+<div class="cur"><i></i><b></b></div>
+<div id="wipe"></div>
+
+<!-- ========================================================================= -->
+<!-- 1. LANDING / HERO PAGE (Route: #home) -->
+<!-- ========================================================================= -->
+<div class="page" id="p-home">
+  <nav class="top">
+    <div class="wrap">
+      <a class="logo" href="#home"><s></s>LOGISTICS//PRO</a>
+      <div style="display:flex;gap:24px" class="m">
+        <a href="#dashboard" style="text-decoration:none;color:var(--mut)">Cockpit</a>
+        <a href="#map" style="text-decoration:none;color:var(--mut)">Freight GIS</a>
+        <a href="#inventory" style="text-decoration:none;color:var(--mut)">Inventory</a>
+        <a href="#orders" style="text-decoration:none;color:var(--mut)">Dijkstra Engine</a>
+      </div>
+      <a class="btn p sm" href="#auth" data-mag>Launch Console →</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <header style="min-height:92vh;position:relative;display:flex;align-items:center;overflow:hidden;padding:140px 0 80px">
+    <canvas id="cv-hero" style="position:absolute;right:-4%;top:0;width:66%;height:100%;opacity:.9"></canvas>
+    <div class="wrap" style="position:relative;width:100%">
+      <p class="m" style="margin-bottom:16px"><span class="v">●</span> 14 Strategic Hubs Online · Pan-India Freight Grid</p>
+      <h1 class="d" style="font-size:clamp(3.5rem,11vw,9.5rem)">
+        MOVE<br><span class="ol">INDIA</span><br><span class="v">FASTER.</span>
+      </h1>
+      <p style="max-width:480px;margin:28px 0;color:#b7c1ae;font-size:1.1rem">
+        Enterprise graph theory engine. Real-time Dijkstra path calculation, multi-warehouse stock telemetry, and automated dispatch across 14 key freight nodes.
+      </p>
+      <div style="display:flex;gap:14px;flex-wrap:wrap">
+        <a class="btn p" href="#auth" data-mag>Enter Enterprise Console →</a>
+        <a class="btn" href="#map" data-mag>Inspect Geospatial Network</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Numbers Marquee -->
+  <div style="border-block:1px solid var(--line);background:var(--bg2);overflow:hidden;padding:18px 0">
+    <div id="mq" style="display:flex;gap:40px;width:max-content;font:800 2.2rem Syne;text-transform:uppercase;animation:mq 28s linear infinite">
+      <span>Delhi NCR</span> · <span>Mumbai JNPT</span> · <span>Bengaluru Tech Park</span> · <span>Chennai Port</span> · <span>Kolkata Hub</span> · <span>Hyderabad</span> · <span>Ahmedabad</span> · <span>Pune</span> · <span>Kochi Port</span> · <span>Jaipur</span>
+    </div>
+  </div>
+  <style>@keyframes mq{to{transform:translateX(-50%)}}</style>
+
+  <!-- Bento Highlights -->
+  <section style="padding:90px 0">
+    <div class="wrap">
+      <p class="m">Platform Architecture</p>
+      <h2 class="d" style="font-size:clamp(2.4rem,6vw,4.5rem);margin:10px 0 40px">BUILT TO MOVE<br><span class="v">AT LIGHTSPEED</span></h2>
+      
+      <div class="grid-bento">
+        <div class="card" style="grid-column:span 8">
+          <span class="chip v">Dijkstra Engine</span>
+          <h3 class="d" style="font-size:2rem;margin:12px 0">Shortest Path Computation in 12ms</h3>
+          <p style="color:var(--mut);max-width:540px">Automated topological highway analysis between Indian hubs minimizing fuel consumption and transit delays.</p>
+          <div style="height:90px;margin-top:24px;border-top:1px solid var(--line);display:flex;align-items:center;justify-content:space-between">
+            <span class="m">Algorithm: Single-Source Shortest Path (Priority Queue)</span>
+            <span class="chip ok">Active</span>
+          </div>
+        </div>
+
+        <div class="card" style="grid-column:span 4">
+          <span class="chip ok">Database Architecture</span>
+          <h3 class="d" style="font-size:1.8rem;margin:12px 0">MySQL + MongoDB</h3>
+          <p style="color:var(--mut)">ACID relational topology (locations, edges, credentials) with high-throughput MongoDB activity and tracking streams.</p>
+        </div>
+
+        <div class="card" style="grid-column:span 4">
+          <span class="chip">Warehouses</span>
+          <h3 class="d" style="font-size:1.8rem;margin:12px 0">1.3M sq ft Capacity</h3>
+          <p style="color:var(--mut)">Real-time utilization monitoring across northern, western, southern, and eastern zones.</p>
+        </div>
+
+        <div class="card" style="grid-column:span 8">
+          <span class="chip v">Fleet Control</span>
+          <h3 class="d" style="font-size:2rem;margin:12px 0">Autonomous Telemetry & Drivers</h3>
+          <p style="color:var(--mut)">Integrated driver ratings, vehicle types (Heavy Trucks, Delivery Vans, Cargo Drones), and on-route status updates.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 2. AUTHENTICATION & LOGIN PAGE (Route: #auth) -->
+<!-- ========================================================================= -->
+<div class="page" id="p-auth">
+  <div style="min-height:100vh;display:grid;grid-template-columns:1fr 1fr" id="auth-grid">
+    <!-- Visual side -->
+    <div style="position:relative;background:var(--bg2);border-right:1px solid var(--line);overflow:hidden;min-height:480px">
+      <canvas id="cv-auth" style="position:absolute;inset:0;width:100%;height:100%"></canvas>
+      <a class="logo" href="#home" style="position:absolute;left:36px;top:32px;z-index:2"><s></s>LOGISTICS//PRO</a>
+      <div style="position:absolute;left:36px;bottom:36px;z-index:2">
+        <p class="m" style="color:var(--volt)">Secure Portal Access</p>
+        <h2 class="d" style="font-size:clamp(2rem,4vw,3.6rem);margin-top:8px">ENTER THE<br><span class="v">NETWORK.</span></h2>
+      </div>
+    </div>
+
+    <!-- Form side -->
+    <div style="display:flex;flex-direction:column;justify-content:center;padding:clamp(24px,6vw,70px);max-width:540px;margin:auto;width:100%">
+      <span class="m">Authentication</span>
+      <h1 class="d" style="font-size:2.8rem;margin:8px 0 24px">Access Console</h1>
+      
+      <!-- 1-Click Role Switcher -->
+      <div style="margin-bottom:24px">
+        <label class="m" style="display:block;margin-bottom:8px">Select Access Role (Demo 1-Click)</label>
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px" id="auth-roles">
+          <button type="button" class="btn sm" onclick="selectRole('admin', this)" style="justify-content:center;border-radius:12px">Admin</button>
+          <button type="button" class="btn sm p" onclick="selectRole('manager', this)" style="justify-content:center;border-radius:12px">Manager</button>
+          <button type="button" class="btn sm" onclick="selectRole('customer', this)" style="justify-content:center;border-radius:12px">Customer</button>
+        </div>
+      </div>
+
+      <form onsubmit="event.preventDefault(); navTo('dashboard');" style="display:flex;flex-direction:column;gap:18px">
+        <div>
+          <label class="m" style="display:block;margin-bottom:6px">Email / Identity</label>
+          <input class="input-dark" id="auth-email" value="manager@logistics.in" required>
+        </div>
+        <div>
+          <label class="m" style="display:block;margin-bottom:6px">Security Key / Password</label>
+          <input class="input-dark" type="password" id="auth-pass" value="manager123" required>
+        </div>
+        
+        <button class="btn p" type="submit" data-mag style="justify-content:center;margin-top:8px">
+          Sign In to System →
+        </button>
+      </form>
+      
+      <p class="m" style="margin-top:20px;text-align:center">
+        Powered by JWT Bearer Authentication · <a href="#home" style="color:var(--volt);text-decoration:none">Back to Landing</a>
+      </p>
+    </div>
+  </div>
+  <style>@media(max-width:860px){#auth-grid{grid-template-columns:1fr!important}}</style>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 3. PRODUCTION APP SHELL (Sidebar + 8 Inner Views) -->
+<!-- ========================================================================= -->
+<div class="shell" id="shell">
+  <!-- Pinned Sidebar -->
+  <aside>
+    <div class="logo-box">
+      <a class="logo" href="#home"><s></s>LOGISTICS//PRO</a>
+    </div>
+
+    <a href="#dashboard" class="side-link" data-route="dashboard">
+      <span>▦</span> <span>Dashboard</span>
+    </a>
+    <a href="#map" class="side-link" data-route="map">
+      <span>◎</span> <span>Warehouses & Map</span>
+    </a>
+    <a href="#inventory" class="side-link" data-route="inventory">
+      <span>▤</span> <span>Inventory</span>
+    </a>
+    <a href="#orders" class="side-link" data-route="orders">
+      <span>⛟</span> <span>Shipments & Dijkstra</span>
+    </a>
+    <a href="#fleet" class="side-link" data-route="fleet">
+      <span>🏎</span> <span>Fleet & Drivers</span>
+    </a>
+    <a href="#analytics" class="side-link" data-route="analytics">
+      <span>◒</span> <span>Analytics</span>
+    </a>
+    <a href="#database" class="side-link" data-route="database">
+      <span>⛁</span> <span>Database Live View</span>
+    </a>
+    <a href="#profile" class="side-link" data-route="profile">
+      <span>👤</span> <span>User Profile</span>
+    </a>
+
+    <div class="sp"></div>
+
+    <button onclick="toggleModal(true)" class="btn p sm" style="justify-content:center;margin-bottom:12px;border-radius:12px">
+      + New Dispatch
+    </button>
+
+    <div class="role-badge">
+      <div class="m" style="font-size:.65rem">Active Operator</div>
+      <div style="font-weight:700;font-size:.85rem;color:var(--ink)" id="shell-user">Warehouse Manager</div>
+      <div class="chip ok" style="font-size:.6rem;padding:2px 6px;margin-top:4px">Connected (MySQL+Mongo)</div>
+    </div>
+
+    <a href="#home" style="color:var(--mut)">↩ <span>Sign Out</span></a>
+  </aside>
+
+  <!-- Main View Area -->
+  <main class="view">
+
+    <!-- VIEW A: DASHBOARD VIEW (#dashboard) -->
+    <div class="page" id="view-dashboard">
+      <div class="hd">
+        <div>
+          <span class="m"><span style="color:var(--ok)">●</span> Pan-India Logistics Grid</span>
+          <h1 class="d">OPERATIONS<br><span class="v">CONTROL</span></h1>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button onclick="toggleModal(true)" class="btn p" data-mag>+ Quick Dispatch</button>
+          <a href="#map" class="btn">Full Screen Map →</a>
+        </div>
+      </div>
+
+      <!-- KPI Metrics -->
+      <div class="kpis">
+        <div class="kpi on">
+          <span class="m">Active Warehouses</span>
+          <b>14</b>
+          <span class="m" style="color:var(--ok)">Strategic Freight Hubs</span>
+          <svg viewBox="0 0 100 40"><polyline points="0,30 20,24 40,28 60,14 80,18 100,6"/></svg>
+        </div>
+        <div class="kpi on">
+          <span class="m">Catalog SKUs</span>
+          <b>44</b>
+          <span class="m" style="color:var(--volt)">Managed in MongoDB</span>
+          <svg viewBox="0 0 100 40"><polyline points="0,20 20,30 40,16 60,22 80,8 100,12"/></svg>
+        </div>
+        <div class="kpi on">
+          <span class="m">Active Shipments</span>
+          <b id="kpi-orders">6</b>
+          <span class="m" style="color:var(--ok)">Dijkstra In-Transit</span>
+          <svg viewBox="0 0 100 40"><polyline points="0,34 25,28 50,30 75,12 100,16"/></svg>
+        </div>
+        <div class="kpi on">
+          <span class="m">Total Occupancy</span>
+          <b>68.4%</b>
+          <span class="m" style="color:var(--hot)">894k / 1.3M sq ft</span>
+          <svg viewBox="0 0 100 40"><polyline points="0,10 30,18 55,14 80,26 100,22"/></svg>
+        </div>
+      </div>
+
+      <!-- Main Bento Row: Mini Map Canvas + Live Stream -->
+      <div style="display:grid;grid-template-columns:1.6fr 1fr;gap:16px;margin-bottom:18px" id="dash-split">
+        <div class="card" style="padding:0;height:420px;position:relative">
+          <canvas id="cv-dash-map" class="map-canvas-box"></canvas>
+          <div style="position:absolute;left:20px;top:20px;background:rgba(6,8,10,.8);backdrop-filter:blur(10px);padding:8px 14px;border-radius:12px;border:1px solid var(--line)" class="m">
+            Autonomous Freight Telemetry · Live 60fps
+          </div>
+        </div>
+
+        <div class="card" style="display:flex;flex-direction:column">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px">
+            <h3 class="d" style="font-size:1.3rem">Activity Feed</h3>
+            <span class="chip ok">Live Mongo Audit</span>
+          </div>
+          <div id="dash-logs" style="display:flex;flex-direction:column;gap:10px;flex:1;overflow:hidden">
+            <!-- Dynamic stream rows -->
+          </div>
+        </div>
+      </div>
+      <style>@media(max-width:1050px){#dash-split{grid-template-columns:1fr!important}}</style>
+
+      <!-- Hub Capacity Matrix -->
+      <div class="card">
+        <h3 class="d" style="font-size:1.3rem;margin-bottom:18px">Indian Hub Capacity & Load Factors</h3>
+        <div id="dash-caps" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px">
+          <!-- Filled dynamically -->
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW B: WAREHOUSES & MAP VIEW (#map) -->
+    <div class="page" id="view-map">
+      <div class="hd">
+        <div>
+          <span class="m">Geospatial Routing Topology</span>
+          <h1 class="d">INDIAN HUBS<br><span class="v">&amp; TOPOLOGY</span></h1>
+        </div>
+        <!-- City Jump Buttons -->
+        <div style="display:flex;gap:6px;flex-wrap:wrap">
+          <button class="btn sm" onclick="hubFocus(0)">DEL</button>
+          <button class="btn sm" onclick="hubFocus(1)">BOM</button>
+          <button class="btn sm" onclick="hubFocus(4)">BLR</button>
+          <button class="btn sm" onclick="hubFocus(5)">CHE</button>
+          <button class="btn sm" onclick="hubFocus(7)">CCU</button>
+          <button class="btn sm" onclick="hubFocus(6)">HYD</button>
+        </div>
+      </div>
+
+      <div style="display:grid;grid-template-columns:3fr 1fr;gap:16px;min-height:560px" id="map-split">
+        <div class="card" style="padding:0;min-height:540px;position:relative">
+          <canvas id="cv-full-map" class="map-canvas-box"></canvas>
+          <div style="position:absolute;bottom:20px;left:20px;display:flex;gap:10px;pointer-events:none">
+            <span class="chip ok">Available: 9 Hubs</span>
+            <span class="chip hot">Near Full: 4 Hubs</span>
+            <span class="chip" style="color:#ff2d55;border-color:rgba(255,45,85,.3)">Critical: 1 Hub</span>
+          </div>
+        </div>
+
+        <div class="card" style="display:flex;flex-direction:column;gap:16px">
+          <span class="m">Selected Hub Inspector</span>
+          <div>
+            <h2 class="d" style="font-size:2rem;color:var(--volt)" id="insp-name">Mumbai JNPT Port</h2>
+            <p class="m" id="insp-code">BOM-02 · Western Maritime Gateway</p>
+          </div>
+          <div style="border-top:1px solid var(--line);padding-top:14px" class="m">
+            <div>GPS Latitude: <span style="color:var(--ink)" id="insp-lat">19.0760° N</span></div>
+            <div style="margin-top:4px">GPS Longitude: <span style="color:var(--ink)" id="insp-lng">72.8777° E</span></div>
+            <div style="margin-top:4px">Direct Corridors: <span style="color:var(--volt)" id="insp-edges">4 Highways</span></div>
+          </div>
+          <div>
+            <div style="display:flex;justify-content:space-between;margin-bottom:6px" class="m">
+              <span>Capacity Utilization</span>
+              <span id="insp-cap" style="color:var(--hot)">88%</span>
+            </div>
+            <div class="bar on"><i id="insp-bar" style="--w:88%;--c:var(--hot)"></i></div>
+          </div>
+          <button onclick="navTo('orders')" class="btn p sm" style="margin-top:auto;justify-content:center">
+            Dispatch to This Hub →
+          </button>
+        </div>
+      </div>
+      <style>@media(max-width:1050px){#map-split{grid-template-columns:1fr!important}}</style>
+    </div>
+
+    <!-- VIEW C: INVENTORY VIEW (#inventory) -->
+    <div class="page" id="view-inventory">
+      <div class="hd">
+        <div>
+          <span class="m">SKU &amp; Stock Intelligence</span>
+          <h1 class="d">CENTRAL<br><span class="v">INVENTORY</span></h1>
+        </div>
+        <div style="display:flex;gap:10px">
+          <input class="input-dark" id="inv-search" placeholder="Search SKU, Product Name, City Hub..." style="width:280px" oninput="filterInventory(this.value)">
+          <button onclick="alert('In production, this opens the Add Inventory Item modal');" class="btn p sm">+ Add SKU</button>
+        </div>
+      </div>
+
+      <div class="card tw">
+        <table>
+          <thead class="m">
+            <tr>
+              <th>SKU Code</th>
+              <th>Product Description</th>
+              <th>Assigned Hub</th>
+              <th>Stock Level</th>
+              <th>Quantity</th>
+              <th>Unit Valuation</th>
+              <th>Status</th>
+              <th style="text-align:right">Action</th>
+            </tr>
+          </thead>
+          <tbody id="inv-tbody">
+            <!-- Dynamic Inventory Rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW D: SHIPMENTS & DIJKSTRA ROUTING (#orders) -->
+    <div class="page" id="view-orders">
+      <div class="hd">
+        <div>
+          <span class="m">Algorithmic Order Processing</span>
+          <h1 class="d">DIJKSTRA<br><span class="v">DISPATCHES</span></h1>
+        </div>
+        <button onclick="processNextOrder()" class="btn p" data-mag>⚡ Process Next in Queue</button>
+      </div>
+
+      <div style="display:grid;grid-template-columns:320px 1fr;gap:16px;margin-bottom:18px" id="order-split">
+        <!-- Route Selector -->
+        <div class="card" style="display:flex;flex-direction:column;gap:14px">
+          <span class="m">Routing Engine Calculator</span>
+          <div>
+            <label class="m" style="display:block;margin-bottom:6px">Origin Freight Hub</label>
+            <select class="input-dark" id="route-from" onchange="calcDijkstra()"></select>
+          </div>
+          <div>
+            <label class="m" style="display:block;margin-bottom:6px">Destination Hub</label>
+            <select class="input-dark" id="route-to" onchange="calcDijkstra()"></select>
+          </div>
+          
+          <div style="background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px;margin-top:6px">
+            <div class="m" style="color:var(--volt)">Shortest Path Computed</div>
+            <div id="route-dist" class="d" style="font-size:2rem;margin:6px 0">1,400 KM</div>
+            <div id="route-path" class="m" style="color:var(--ink);line-height:1.8">DEL → AMD → BOM</div>
+            <div class="m" style="margin-top:10px;color:var(--mut)">Transit: ~23.5 Hours · Fuel: 280L</div>
+          </div>
+
+          <button onclick="triggerDispatch()" class="btn p" style="justify-content:center">
+            Create Dijkstra Dispatch →
+          </button>
+        </div>
+
+        <!-- Live Routing Canvas -->
+        <div class="card" style="padding:0;position:relative;min-height:440px">
+          <canvas id="cv-route-map" class="map-canvas-box"></canvas>
+          <div style="position:absolute;top:20px;right:20px;display:flex;gap:8px">
+            <span class="chip v" id="live-progress">SLA Active: 100%</span>
+          </div>
+        </div>
+      </div>
+      <style>@media(max-width:1050px){#order-split{grid-template-columns:1fr!important}}</style>
+
+      <!-- Active Queue Table -->
+      <div class="card">
+        <h3 class="d" style="font-size:1.3rem;margin-bottom:16px">Active Dispatch Orders Queue</h3>
+        <div id="orders-queue-list" style="display:flex;flex-direction:column;gap:10px">
+          <!-- Queued orders -->
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW E: FLEET & DRIVERS (#fleet) -->
+    <div class="page" id="view-fleet">
+      <div class="hd">
+        <div>
+          <span class="m">Transport Infrastructure</span>
+          <h1 class="d">FLEET &amp;<br><span class="v">DRIVERS</span></h1>
+        </div>
+        <div style="display:flex;gap:10px">
+          <button class="btn sm p" onclick="alert('Add Driver modal in production');">+ New Driver</button>
+          <button class="btn sm" onclick="alert('Add Vehicle modal in production');">+ New Vehicle</button>
+        </div>
+      </div>
+
+      <div class="grid-bento">
+        <!-- Drivers Column -->
+        <div class="card" style="grid-column:span 6">
+          <h3 class="d" style="font-size:1.4rem;margin-bottom:16px">Authorized Drivers</h3>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="padding:16px;background:var(--bg);border:1px solid var(--line);border-radius:14px;display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">James Wilson</div>
+                <div class="m">ID: DRV-001 · Assigned: Heavy Truck (LY-1029)</div>
+              </div>
+              <div style="text-align:right">
+                <span class="chip ok">Available</span>
+                <div class="m" style="margin-top:4px">Rating: ★ 4.8</div>
+              </div>
+            </div>
+            <div style="padding:16px;background:var(--bg);border:1px solid var(--line);border-radius:14px;display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Sarah Connor</div>
+                <div class="m">ID: DRV-002 · Assigned: Delivery Van (LY-4050)</div>
+              </div>
+              <div style="text-align:right">
+                <span class="chip v">On Route</span>
+                <div class="m" style="margin-top:4px">Rating: ★ 4.9</div>
+              </div>
+            </div>
+            <div style="padding:16px;background:var(--bg);border:1px solid var(--line);border-radius:14px;display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Mike Ross</div>
+                <div class="m">ID: DRV-003 · Assigned: None (Reserve)</div>
+              </div>
+              <div style="text-align:right">
+                <span class="chip" style="color:var(--mut)">Off Duty</span>
+                <div class="m" style="margin-top:4px">Rating: ★ 4.5</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Vehicles Column -->
+        <div class="card" style="grid-column:span 6">
+          <h3 class="d" style="font-size:1.4rem;margin-bottom:16px">Active Fleet Vehicles</h3>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="padding:16px;background:var(--bg);border:1px solid var(--line);border-radius:14px;display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Heavy Freight Hauler · 15 Tonnes</div>
+                <div class="m">Plate: LY-1029 · GPS Transponder Active</div>
+              </div>
+              <span class="chip ok">Active</span>
+            </div>
+            <div style="padding:16px;background:var(--bg);border:1px solid var(--line);border-radius:14px;display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Electric Delivery Van · 3 Tonnes</div>
+                <div class="m">Plate: LY-4050 · EV Charging Hub Bengaluru</div>
+              </div>
+              <span class="chip ok">Active</span>
+            </div>
+            <div style="padding:16px;background:var(--bg);border:1px solid var(--line);border-radius:14px;display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Autonomous Transport Drone · 50 KG</div>
+                <div class="m">Drone ID: DRN-X1 · Propeller Recalibration</div>
+              </div>
+              <span class="chip hot">Maintenance</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW F: ANALYTICS & REPORTS (#analytics) -->
+    <div class="page" id="view-analytics">
+      <div class="hd">
+        <div>
+          <span class="m">System Telemetry &amp; Metrics</span>
+          <h1 class="d">PERFORMANCE<br><span class="v">ANALYTICS</span></h1>
+        </div>
+      </div>
+
+      <div class="grid-bento">
+        <div class="card" style="grid-column:span 4">
+          <span class="m">Total Network Capacity</span>
+          <div class="d" style="font-size:3rem;color:var(--volt);margin:10px 0">68.4%</div>
+          <div class="bar on"><i style="--w:68.4%;--c:var(--volt)"></i></div>
+          <p class="m" style="margin-top:12px">44 SKUs distributed across 14 freight hubs.</p>
+        </div>
+
+        <div class="card" style="grid-column:span 4">
+          <span class="m">Active Fleet Utilization</span>
+          <div class="d" style="font-size:3rem;color:var(--ok);margin:10px 0">84.2%</div>
+          <div class="bar on"><i style="--w:84.2%;--c:var(--ok)"></i></div>
+          <p class="m" style="margin-top:12px">28 active corridor dispatches in transit.</p>
+        </div>
+
+        <div class="card" style="grid-column:span 4">
+          <span class="m">Dijkstra Fuel Optimization</span>
+          <div class="d" style="font-size:3rem;color:var(--cyan);margin:10px 0">-19.4%</div>
+          <div class="bar on"><i style="--w:78%;--c:var(--cyan)"></i></div>
+          <p class="m" style="margin-top:12px">Average ₹12.8L saved per 10,000 km.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- VIEW G: DATABASE LIVE VIEW (#database) -->
+    <div class="page" id="view-database">
+      <div class="hd">
+        <div>
+          <span class="m">Relational &amp; Document Data Live</span>
+          <h1 class="d">DATABASE<br><span class="v">SNAPSHOT</span></h1>
+        </div>
+        <div style="display:flex;gap:8px">
+          <span class="chip ok">MySQL: Connected</span>
+          <span class="chip ok">MongoDB: Connected</span>
+        </div>
+      </div>
+
+      <!-- Table Switcher Tabs -->
+      <div style="display:flex;gap:8px;margin-bottom:16px;flex-wrap:wrap">
+        <button class="btn sm p" onclick="switchDbTable('warehouses', this)">warehouses (14 rows)</button>
+        <button class="btn sm" onclick="switchDbTable('inventory', this)">inventory (44 items)</button>
+        <button class="btn sm" onclick="switchDbTable('orders', this)">orders (6 orders)</button>
+        <button class="btn sm" onclick="switchDbTable('edges', this)">edges (21 highway links)</button>
+        <button class="btn sm" onclick="switchDbTable('users', this)">users (3 auth roles)</button>
+      </div>
+
+      <div class="card tw">
+        <table>
+          <thead class="m" id="db-thead">
+            <!-- Dynamic Headers -->
+          </thead>
+          <tbody id="db-tbody" class="m">
+            <!-- Dynamic Rows -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- VIEW H: USER PROFILE & SETTINGS (#profile) -->
+    <div class="page" id="view-profile">
+      <div class="hd">
+        <div>
+          <span class="m">Security &amp; Operator Settings</span>
+          <h1 class="d">USER<br><span class="v">PROFILE</span></h1>
+        </div>
+      </div>
+
+      <div class="grid-bento">
+        <div class="card" style="grid-column:span 5;text-align:center">
+          <div style="width:84px;height:84px;border-radius:50%;background:rgba(200,255,46,.15);border:2px solid var(--volt);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font:800 2rem Syne;color:var(--volt)">
+            VK
+          </div>
+          <h2 class="d" style="font-size:1.8rem" id="prof-name">Warehouse Manager</h2>
+          <p class="m" style="color:var(--volt);margin:4px 0 16px" id="prof-role">Role: Facility Operations</p>
+          <div style="padding:12px;background:var(--bg);border-radius:12px;border:1px solid var(--line)" class="m">
+            operator@logistics.pro · ID #4819
+          </div>
+
+          <div style="margin-top:24px;display:flex;flex-direction:column;gap:10px">
+            <button onclick="selectRole('customer', null); navTo('profile');" class="btn sm" style="justify-content:center">Switch to Customer</button>
+            <button onclick="selectRole('admin', null); navTo('profile');" class="btn sm" style="justify-content:center">Switch to Superadmin</button>
+            <a href="#home" class="btn sm" style="justify-content:center;color:var(--hot);border-color:rgba(255,90,31,.3)">Log Out Session</a>
+          </div>
+        </div>
+
+        <div class="card" style="grid-column:span 7">
+          <h3 class="d" style="font-size:1.3rem;margin-bottom:16px">Security Credentials &amp; Audit Log</h3>
+          <div style="display:flex;flex-direction:column;gap:12px">
+            <div style="padding:16px;background:var(--bg);border-radius:12px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">Multi-Factor Hardware Token</div>
+                <div class="m">Encrypted FIDO2 WebAuthn Key</div>
+              </div>
+              <span class="chip ok">Active</span>
+            </div>
+            <div style="padding:16px;background:var(--bg);border-radius:12px;border:1px solid var(--line);display:flex;justify-content:space-between;align-items:center">
+              <div>
+                <div style="font-weight:700">API Gateway Key</div>
+                <div class="m">Bearer Authorization Token (Valid 24h)</div>
+              </div>
+              <span class="chip v">Authenticated</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 4. QUICK DISPATCH MODAL -->
+<!-- ========================================================================= -->
+<div id="dispatch-modal">
+  <div class="modal-box">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:20px">
+      <h3 class="d" style="font-size:1.5rem">New Dijkstra Dispatch</h3>
+      <button onclick="toggleModal(false)" style="background:none;border:0;font-size:1.4rem;color:var(--mut)">✕</button>
+    </div>
+
+    <div style="display:flex;flex-direction:column;gap:14px">
+      <div>
+        <label class="m" style="display:block;margin-bottom:6px">Select Stock Item</label>
+        <select class="input-dark">
+          <option>Industrial Heavy Transport Drones (Qty: 10)</option>
+          <option>Standard 40ft Marine Containers (Qty: 2)</option>
+          <option>Automotive Microcontrollers &amp; PCBs (Qty: 500)</option>
+        </select>
+      </div>
+
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px">
+        <div>
+          <label class="m" style="display:block;margin-bottom:6px">Origin Hub</label>
+          <select class="input-dark">
+            <option>Delhi NCR Hub (DEL)</option>
+            <option>Mumbai JNPT Port (BOM)</option>
+            <option>Bengaluru Tech Park (BLR)</option>
+          </select>
+        </div>
+        <div>
+          <label class="m" style="display:block;margin-bottom:6px">Destination Hub</label>
+          <select class="input-dark">
+            <option>Mumbai JNPT Port (BOM)</option>
+            <option>Chennai Port (CHE)</option>
+            <option>Kolkata Distribution (CCU)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:14px;margin-top:6px" class="m">
+        <div style="color:var(--volt);font-weight:700">Optimal Dijkstra Path:</div>
+        <div style="color:var(--ink);margin:4px 0">DEL → Jaipur → Ahmedabad → Mumbai</div>
+        <div style="color:var(--mut)">Distance: 1,400 KM · Estimated Transit: ~23.5 Hours</div>
+      </div>
+
+      <div style="display:flex;justify-content:flex-end;gap:10px;margin-top:12px">
+        <button onclick="toggleModal(false)" class="btn sm">Cancel</button>
+        <button onclick="alert('Dispatch successfully authorized! Queued into real-time tracking.'); toggleModal(false);" class="btn p sm">Confirm &amp; Dispatch →</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ========================================================================= -->
+<!-- 5. INTERACTIVE ENGINE SCRIPTS & DATA BINDING -->
+<!-- ========================================================================= -->
+<script>
+const $ = s => document.querySelector(s);
+const $$ = s => [...document.querySelectorAll(s)];
+const R = n => Math.floor(Math.random() * n);
+
+/* Indian Freight Hub Coordinates (14 Hubs) */
+const C = [
+  ['Delhi', 77.2, 28.6],
+  ['Mumbai', 72.9, 19.1],
+  ['Pune', 73.9, 18.5],
+  ['Kolhapur', 74.2, 16.7],
+  ['Bengaluru', 77.6, 13.0],
+  ['Chennai', 80.3, 13.1],
+  ['Hyderabad', 78.5, 17.4],
+  ['Kolkata', 88.4, 22.6],
+  ['Ahmedabad', 72.6, 23.0],
+  ['Jaipur', 75.8, 26.9],
+  ['Lucknow', 80.9, 26.8],
+  ['Chandigarh', 76.8, 30.7],
+  ['Indore', 75.9, 22.7],
+  ['Kochi', 76.3, 9.9]
+];
+const N = C.map(c => c[0]);
+
+/* Highway Edges Topology */
+const E = "Delhi-Chandigarh,Delhi-Jaipur,Delhi-Lucknow,Jaipur-Ahmedabad,Jaipur-Indore,Ahmedabad-Mumbai,Ahmedabad-Indore,Indore-Mumbai,Indore-Hyderabad,Mumbai-Pune,Pune-Kolhapur,Pune-Hyderabad,Kolhapur-Bengaluru,Bengaluru-Chennai,Bengaluru-Hyderabad,Bengaluru-Kochi,Chennai-Hyderabad,Chennai-Kochi,Hyderabad-Kolkata,Lucknow-Kolkata,Lucknow-Indore"
+  .split(',').map(e => e.split('-').map(n => N.indexOf(n)));
+
+/* India Coastline Outline */
+const OUT = [
+  [74,34.5],[77,35.5],[79,33],[78.5,31],[81,30],[80,28.5],[84,27.5],[88,27],[88.5,28],
+  [92,27],[96,28.2],[97,27],[95,25],[93,22],[92,24],[90,22],[89,21.7],[87,21.5],[85,19.5],
+  [82,16.5],[80.3,15],[80.3,13],[79.8,10.3],[78,8.3],[77.5,8.1],[76.3,9.5],[75,12],[74,15],
+  [72.8,19],[72.7,21],[70.5,20.8],[69,22.3],[70.5,23.3],[68.2,23.7],[69.5,25.5],[70,27.5],
+  [72,29],[74.5,31],[74,32.5]
+];
+
+/* Spherical Distance & Dijkstra Graph */
+const km = (a, b) => {
+  const r = x => x * Math.PI / 180;
+  const dl = r(b[2] - a[2]), dg = r(b[1] - a[1]);
+  const h = Math.sin(dl/2)**2 + Math.cos(r(a[2])) * Math.cos(r(b[2])) * Math.sin(dg/2)**2;
+  return 2 * 6371 * Math.asin(Math.sqrt(h)) * 1.28;
+};
+const W = C.map(() => []);
+E.forEach(([a, b]) => {
+  const d = km([0, C[a][1], C[a][2]], [0, C[b][1], C[b][2]]);
+  W[a].push([b, d]);
+  W[b].push([a, d]);
+});
+
+function dijk(s, t) {
+  const D = C.map(() => 1e9), P = [], Q = new Set(C.map((_, i) => i));
+  D[s] = 0;
+  while (Q.size) {
+    let u = -1;
+    Q.forEach(i => { if (u < 0 || D[i] < D[u]) u = i; });
+    Q.delete(u);
+    if (u === t) break;
+    W[u].forEach(([v, w]) => {
+      if (D[u] + w < D[v]) {
+        D[v] = D[u] + w;
+        P[v] = u;
+      }
+    });
+  }
+  const p = [];
+  for (let x = t; x != null; x = P[x]) {
+    p.unshift(x);
+    if (x === s) break;
+  }
+  return { path: p, dist: Math.round(D[t]) };
+}
+
+/* 60 FPS HTML5 Canvas Topology Engine */
+class NetworkMap {
+  constructor(cv, opt = {}) {
+    this.cv = cv;
+    this.x = cv.getContext('2d');
+    this.opt = opt;
+    this.tr = [];
+    this.rt = null;
+    this.hv = -1;
+    new ResizeObserver(() => this.rs()).observe(cv);
+    for (let i = 0; i < (opt.amb || 0); i++) this.spawn(Math.random());
+    requestAnimationFrame(t => this.render(t));
+  }
+  rs() {
+    const r = this.cv.getBoundingClientRect(), d = window.devicePixelRatio || 1;
+    this.w = r.width;
+    this.h = r.height;
+    this.cv.width = r.width * d;
+    this.cv.height = r.height * d;
+    this.x.setTransform(d, 0, 0, d, 0, 0);
+    const p = this.opt.pad || 28;
+    const s = Math.min((this.w - 2 * p) / (29 * 0.92), (this.h - 2 * p) / 28);
+    this.s = s;
+    this.ox = (this.w - 29 * 0.92 * s) / 2;
+    this.oy = (this.h - 28 * s) / 2;
+  }
+  P(lo, la) { return [this.ox + (lo - 68.5) * 0.92 * this.s, this.oy + (35.8 - la) * this.s]; }
+  N(i) { return this.P(C[i][1], C[i][2]); }
+  spawn(d, from) {
+    let a = from ?? R(14), b;
+    do b = R(14); while (b === a);
+    this.tr.push({ p: dijk(a, b).path, d: d || 0, v: 0.04 + Math.random() * 0.05 });
+  }
+  at(path, f) {
+    const pts = path.map(i => this.N(i));
+    const lens = [0];
+    for (let i = 1; i < pts.length; i++) lens[i] = lens[i-1] + Math.hypot(pts[i][0] - pts[i-1][0], pts[i][1] - pts[i-1][1]);
+    const total = f * lens[lens.length - 1];
+    let i = 1;
+    while (i < pts.length - 1 && lens[i] < total) i++;
+    const k = (total - lens[i-1]) / ((lens[i] - lens[i-1]) || 1);
+    return {
+      x: pts[i-1][0] + (pts[i][0] - pts[i-1][0]) * k,
+      y: pts[i-1][1] + (pts[i][1] - pts[i-1][1]) * k,
+      a: Math.atan2(pts[i][1] - pts[i-1][1], pts[i][0] - pts[i-1][0]),
+      pts, lens, total
+    };
+  }
+  run(path, dur) { this.rt = { p: path, t0: performance.now(), dur }; }
+  render(now) {
+    requestAnimationFrame(t => this.render(t));
+    if (!this.cv.offsetParent) return;
+    const x = this.x, T = now / 1000;
+    x.clearRect(0, 0, this.w, this.h);
+
+    // Outline
+    x.beginPath();
+    OUT.forEach((p, i) => { const [a, b] = this.P(...p); i ? x.lineTo(a, b) : x.moveTo(a, b); });
+    x.closePath();
+    x.fillStyle = 'rgba(200,255,46,.025)';
+    x.fill();
+    x.strokeStyle = 'rgba(200,255,46,.22)';
+    x.lineWidth = 1.2;
+    x.setLineDash([4, 6]);
+    x.lineDashOffset = -T * 6;
+    x.stroke();
+    x.setLineDash([]);
+
+    // Highway Edges
+    x.strokeStyle = 'rgba(255,255,255,.1)';
+    x.lineWidth = 1;
+    E.forEach(([a, b]) => {
+      x.beginPath();
+      x.moveTo(...this.N(a));
+      x.lineTo(...this.N(b));
+      x.stroke();
+    });
+
+    // Active Highlight Route
+    if (this.rt) {
+      const rp = Math.min(1, (now - this.rt.t0) / this.rt.dur);
+      const q = this.at(this.rt.p, rp);
+      x.lineWidth = 3.5;
+      x.strokeStyle = '#c8ff2e';
+      x.shadowColor = '#c8ff2e';
+      x.shadowBlur = 14;
+      x.beginPath();
+      x.moveTo(...q.pts[0]);
+      for (let i = 1; i < q.pts.length && q.lens[i] < q.total; i++) x.lineTo(...q.pts[i]);
+      x.lineTo(q.x, q.y);
+      x.stroke();
+      x.shadowBlur = 0;
+      this.truck(q, '#fff');
+    }
+
+    // Moving Fleet Trucks
+    this.tr.forEach((t, i) => {
+      t.d += t.v / 60;
+      if (t.d >= 1) {
+        const last = t.p[t.p.length - 1];
+        this.tr.splice(i, 1);
+        this.spawn(0, last);
+        return;
+      }
+      const q = this.at(t.p, t.d);
+      x.strokeStyle = 'rgba(200,255,46,.5)';
+      x.lineWidth = 1.5;
+      x.beginPath();
+      const b = this.at(t.p, Math.max(0, t.d - 0.05));
+      x.moveTo(b.x, b.y);
+      x.lineTo(q.x, q.y);
+      x.stroke();
+      this.truck(q, '#c8ff2e');
+    });
+
+    // Nodes (Hubs)
+    C.forEach((c, i) => {
+      const [a, b] = this.N(i);
+      const on = this.rt && this.rt.p.includes(i);
+      const pu = (Math.sin(T * 2 + i) + 1) / 2;
+      x.beginPath();
+      x.arc(a, b, 5 + pu * 8, 0, 7);
+      x.fillStyle = `rgba(200,255,46,${0.12 * (1 - pu)})`;
+      x.fill();
+
+      x.beginPath();
+      x.arc(a, b, on ? 5.5 : 3.5, 0, 7);
+      x.fillStyle = on ? '#c8ff2e' : '#eef2e6';
+      x.shadowColor = '#c8ff2e';
+      x.shadowBlur = on ? 14 : 0;
+      x.fill();
+      x.shadowBlur = 0;
+
+      if (this.opt.labels || on) {
+        x.font = '700 10px JetBrains Mono';
+        x.fillStyle = on ? '#c8ff2e' : '#889582';
+        x.fillText(c[0].toUpperCase(), a + 8, b + 3);
+      }
+    });
+  }
+  truck(q, c) {
+    const x = this.x;
+    x.save();
+    x.translate(q.x, q.y);
+    x.rotate(q.a);
+    x.fillStyle = c;
+    x.shadowColor = c;
+    x.shadowBlur = 12;
+    x.fillRect(-6, -3, 12, 6);
+    x.fillStyle = '#06080a';
+    x.fillRect(2, -2, 2, 4);
+    x.restore();
+  }
+}
+
+/* SPA Router */
+const innerViews = ['dashboard', 'map', 'inventory', 'orders', 'fleet', 'analytics', 'database', 'profile'];
+let currentRoute = '';
+
+function navTo(hash) {
+  const route = (hash || 'home').replace('#', '');
+  if (route === currentRoute) return;
+
+  const wipe = $('#wipe');
+  if (currentRoute) {
+    wipe.classList.remove('go');
+    void wipe.offsetWidth;
+    wipe.classList.add('go');
+  }
+  currentRoute = route;
+
+  setTimeout(() => {
+    $$('.page').forEach(p => p.classList.remove('on'));
+    const isAppInner = innerViews.includes(route);
+    $('#shell').classList.toggle('on', isAppInner);
+
+    if (isAppInner) {
+      const activeInner = $(`#view-${route}`);
+      if (activeInner) activeInner.classList.add('on');
+      $$('.side-link').forEach(l => l.classList.toggle('active', l.dataset.route === route));
+    } else {
+      const activePublic = $(`#p-${route}`) || $('#p-home');
+      activePublic.classList.add('on');
+    }
+    window.scrollTo(0, 0);
+  }, currentRoute ? 320 : 0);
+}
+window.addEventListener('hashchange', () => navTo(location.hash));
+
+/* Spotlight & Cursor */
+const cur = $('.cur');
+let mx = 0, my = 0, rx = 0, ry = 0;
+window.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cur.querySelector('i').style.transform = `translate(${mx}px,${my}px)`;
+  const card = e.target.closest('.card, .kpi');
+  if (card) {
+    const r = card.getBoundingClientRect();
+    card.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+    card.style.setProperty('--my', (e.clientY - r.top) + 'px');
+  }
+  cur.classList.toggle('h', !!e.target.closest('a, button, select, input, [data-mag]'));
+});
+(function curLag() {
+  rx += (mx - rx) * 0.18;
+  ry += (my - ry) * 0.18;
+  cur.querySelector('b').style.transform = `translate(${rx}px,${ry}px)`;
+  requestAnimationFrame(curLag);
+})();
+
+/* Modal Controls */
+function toggleModal(show) {
+  $('#dispatch-modal').classList.toggle('on', show);
+}
+
+/* Authentication Role Switcher */
+function selectRole(role, btn) {
+  if (btn) {
+    $$('#auth-roles button').forEach(b => b.classList.remove('p'));
+    btn.classList.add('p');
+  }
+  const emailMap = { admin: 'admin@logistics.in', manager: 'manager@logistics.in', customer: 'customer@client.in' };
+  const passMap = { admin: 'admin123', manager: 'manager123', customer: 'customer123' };
+  $('#auth-email').value = emailMap[role] || 'manager@logistics.in';
+  $('#auth-pass').value = passMap[role] || 'manager123';
+  $('#shell-user').textContent = role === 'admin' ? 'Superadmin Operator' : role === 'manager' ? 'Warehouse Manager' : 'Enterprise Customer';
+}
+
+/* Initialize Maps */
+let heroMap, dashMap, fullMap, routeMap;
+document.addEventListener("DOMContentLoaded", () => {
+  heroMap = new NetworkMap($('#cv-hero'), { amb: 9, labels: false });
+  new NetworkMap($('#cv-auth'), { amb: 8, labels: true });
+  dashMap = new NetworkMap($('#cv-dash-map'), { amb: 6, labels: true, pad: 20 });
+  fullMap = new NetworkMap($('#cv-full-map'), { amb: 8, labels: true, pad: 30 });
+  routeMap = new NetworkMap($('#cv-route-map'), { amb: 4, labels: true, pad: 24 });
+
+  initDashboardData();
+  initInventoryData();
+  initOrdersData();
+  initDatabaseView();
+  navTo(location.hash || 'home');
+});
+
+/* Dashboard Dynamic Feed */
+function initDashboardData() {
+  const HUB_CAPS = [
+    ['Delhi Mega Hub', 92, 'North'],
+    ['Mumbai JNPT Port', 88, 'West'],
+    ['Pune Express Hub', 64, 'West'],
+    ['Bengaluru Tech Park', 71, 'South'],
+    ['Chennai Maritime Base', 55, 'South'],
+    ['Kolkata Distribution', 83, 'East'],
+    ['Hyderabad Central', 47, 'South'],
+    ['Ahmedabad Node', 38, 'West']
+  ];
+  $('#dash-caps').innerHTML = HUB_CAPS.map(([n, v, z]) => `
+    <div style="background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:16px">
+      <div style="display:flex;justify-content:space-between;margin-bottom:6px">
+        <span style="font-weight:700;font-size:.85rem">${n}</span>
+        <span class="m" style="color:${v > 90 ? '#ff2d55' : v >= 75 ? 'var(--hot)' : 'var(--ok)'}">${v}%</span>
+      </div>
+      <div class="bar on"><i style="--w:${v}%;--c:${v > 90 ? '#ff2d55' : v >= 75 ? 'var(--hot)' : 'var(--ok)'}"></i></div>
+      <div class="m" style="margin-top:8px;font-size:.65rem">Zone: ${z} Indian Freight Corridor</div>
+    </div>
+  `).join('');
+
+  const LOGS = [
+    'Order #ORD-8812 Dijkstra path resolved · Delhi → Mumbai',
+    'Inventory sync complete · 1,500 ARM64 Microchips @ Bengaluru',
+    'High load alert · Mumbai JNPT reached 88% capacity',
+    'Order #ORD-8809 delivered on-time · Kolkata Port',
+    'New dispatch dispatched · Pune → Hyderabad'
+  ];
+  function addLog() {
+    $('#dash-logs').insertAdjacentHTML('afterbegin', `
+      <div style="padding:10px 14px;background:var(--bg);border-left:2px solid var(--volt);border-radius:0 10px 10px 0;font-size:.84rem">
+        <div>${LOGS[R(LOGS.length)]}</div>
+        <div class="m" style="font-size:.65rem;margin-top:2px">${new Date().toLocaleTimeString()} · Telemetry Stream</div>
+      </div>
+    `);
+    while ($('#dash-logs').children.length > 5) $('#dash-logs').lastChild.remove();
+  }
+  for(let i=0; i<4; i++) addLog();
+  setInterval(() => {
+    addLog();
+    $('#kpi-orders').textContent = 4 + R(4);
+  }, 3400);
+}
+
+/* Hub Inspector on Map View */
+function hubFocus(idx) {
+  const hub = C[idx];
+  $('#insp-name').textContent = hub[0] + ' Freight Hub';
+  $('#insp-code').textContent = hub[0].substring(0,3).toUpperCase() + '-0' + (idx+1) + ' · Active Logistics Node';
+  $('#insp-lat').textContent = hub[2] + '° N';
+  $('#insp-lng').textContent = hub[1] + '° E';
+  const cap = 40 + (idx * 5) % 55;
+  $('#insp-cap').textContent = cap + '%';
+  $('#insp-bar').style.setProperty('--w', cap + '%');
+}
+
+/* Inventory Table & Filter */
+const MOCK_INV = [
+  { sku: 'SKU-DRN-101', name: 'Industrial Heavy Transport Drones', hub: 'Delhi NCR Hub', q: 45, price: '₹98,000' },
+  { sku: 'SKU-CNT-40F', name: 'Standard 40ft Marine Freight Containers', hub: 'Mumbai JNPT Port', q: 12, price: '₹2,80,000' },
+  { sku: 'SKU-ELC-882', name: 'Automotive Microcontrollers & PCBs', hub: 'Bangalore Tech Park', q: 1500, price: '₹1,250' },
+  { sku: 'SKU-MED-900', name: 'Emergency Surgical Medical Kits', hub: 'Chennai Port', q: 80, price: '₹14,500' },
+  { sku: 'SKU-AGR-501', name: 'Refrigerated Cold-Chain Fresh Produce', hub: 'Kolkata Distribution', q: 500, price: '₹850' },
+  { sku: 'SKU-TEX-302', name: 'Premium Cotton & Silk Textile Bales', hub: 'Ahmedabad Hub', q: 300, price: '₹4,200' },
+  { sku: 'SKU-SOL-774', name: 'Solar PV Inverters & Battery Storage', hub: 'Hyderabad Central', q: 65, price: '₹45,000' }
+];
+
+function renderInventory(items) {
+  $('#inv-tbody').innerHTML = items.map(item => {
+    const status = item.q === 0 ? ['Out of Stock', 'hot'] : item.q < 50 ? ['Low Stock', 'v'] : ['In Stock', 'ok'];
+    return `
+      <tr>
+        <td class="m" style="color:var(--volt);font-weight:700">${item.sku}</td>
+        <td style="font-weight:700;color:var(--ink)">${item.name}</td>
+        <td>${item.hub}</td>
+        <td style="width:160px"><div class="bar on"><i style="--w:${Math.min(100, item.q / 15)}%;--c:var(--${status[1]})"></i></div></td>
+        <td class="m" style="font-weight:700">${item.q.toLocaleString()}</td>
+        <td class="m">${item.price}</td>
+        <td><span class="chip ${status[1]}">${status[0]}</span></td>
+        <td style="text-align:right"><button onclick="toggleModal(true)" class="btn sm p" style="padding:4px 10px;font-size:.68rem">Dispatch</button></td>
+      </tr>
+    `;
+  }).join('');
+}
+function initInventoryData() { renderInventory(MOCK_INV); }
+function filterInventory(query) {
+  const q = query.toLowerCase();
+  const filtered = MOCK_INV.filter(i => (i.sku + i.name + i.hub).toLowerCase().includes(q));
+  renderInventory(filtered);
+}
+
+/* Dijkstra Orders Route Calculator */
+function initOrdersData() {
+  const opt = N.map((name, i) => `<option value="${i}">${name}</option>`).join('');
+  $('#route-from').innerHTML = opt;
+  $('#route-to').innerHTML = opt;
+  $('#route-from').value = 0; // Delhi
+  $('#route-to').value = 1;  // Mumbai
+  calcDijkstra();
+
+  const QUEUE = [
+    { id: 'ORD-8812', route: 'Delhi → Mumbai', urg: 'Critical', p: 72 },
+    { id: 'ORD-8814', route: 'Bengaluru → Chennai', urg: 'Medium', p: 35 },
+    { id: 'ORD-8815', route: 'Hyderabad → Kolkata', urg: 'Low', p: 18 },
+    { id: 'ORD-8816', route: 'Mumbai → Pune', urg: 'High', p: 89 }
+  ];
+  $('#orders-queue-list').innerHTML = QUEUE.map(q => `
+    <div style="padding:14px 18px;background:var(--bg);border:1px solid var(--line);border-radius:14px;display:grid;grid-template-columns:120px 1.5fr 1fr 100px;align-items:center;gap:16px">
+      <span class="m" style="color:var(--volt);font-weight:700">${q.id}</span>
+      <div style="font-weight:700">${q.route}</div>
+      <div><div class="bar on"><i style="--w:${q.p}%;--c:var(--volt)"></i></div><span class="m" style="font-size:.65rem">${q.p}% completed</span></div>
+      <span class="chip ${q.urg === 'Critical' ? 'hot' : q.urg === 'High' ? 'v' : 'ok'}" style="justify-self:end">${q.urg}</span>
+    </div>
+  `).join('');
+}
+
+function calcDijkstra() {
+  const a = +$('#route-from').value, b = +$('#route-to').value;
+  if (a === b) return;
+  const res = dijk(a, b);
+  $('#route-dist').textContent = res.dist.toLocaleString() + ' KM';
+  $('#route-path').textContent = res.path.map(i => N[i]).join(' → ');
+  if (routeMap) routeMap.run(res.path, Math.max(4000, res.dist * 4));
+}
+
+function triggerDispatch() {
+  calcDijkstra();
+  alert('Dijkstra Shortest Route computed and dispatched to fleet driver.');
+}
+function processNextOrder() {
+  alert('Dispatched next high-priority order from queue. Live GPS tracking engaged.');
+}
+
+/* Database Live Snapshot Mock */
+const DB_TABLES = {
+  warehouses: {
+    cols: ['id', 'code', 'name', 'city', 'capacity_sqft', 'utilization_pct', 'status'],
+    rows: [
+      ['1', 'DEL', 'Delhi Mega Hub', 'New Delhi', '250,000', '92%', 'Near Full'],
+      ['2', 'BOM', 'Mumbai JNPT Port', 'Mumbai', '300,000', '88%', 'Near Full'],
+      ['3', 'BLR', 'Bengaluru Tech Park', 'Bengaluru', '200,000', '71%', 'Available'],
+      ['4', 'CHE', 'Chennai Sea Port', 'Chennai', '180,000', '55%', 'Available'],
+      ['5', 'CCU', 'Kolkata Distribution', 'Kolkata', '160,000', '83%', 'Near Full']
+    ]
+  },
+  inventory: {
+    cols: ['id', 'sku', 'product_name', 'warehouse_id', 'quantity', 'unit_price', 'status'],
+    rows: [
+      ['1', 'SKU-DRN-101', 'Heavy Lift Transport Drones', '1', '45', '₹98,000', 'In Stock'],
+      ['2', 'SKU-CNT-40F', 'Standard 40ft Marine Containers', '2', '12', '₹2,80,000', 'Low Stock'],
+      ['3', 'SKU-ELC-882', 'Automotive Microcontrollers', '3', '1,500', '₹1,250', 'In Stock']
+    ]
+  },
+  orders: {
+    cols: ['id', 'source', 'destination', 'distance_km', 'urgency', 'status', 'deadline'],
+    rows: [
+      ['ORD-8812', 'Delhi', 'Mumbai', '1,400', 'Critical', 'In Transit', '2026-10-30 08:00'],
+      ['ORD-8814', 'Bengaluru', 'Chennai', '350', 'Medium', 'Pending', '2026-10-30 14:00']
+    ]
+  },
+  edges: {
+    cols: ['id', 'source_hub', 'target_hub', 'distance_km', 'toll_category'],
+    rows: [
+      ['1', 'Delhi', 'Jaipur', '280', 'National Highway 48'],
+      ['2', 'Jaipur', 'Ahmedabad', '660', 'Western Dedicated Corridor'],
+      ['3', 'Ahmedabad', 'Mumbai', '530', 'Golden Quadrilateral']
+    ]
+  },
+  users: {
+    cols: ['id', 'username', 'email', 'assigned_role', 'status'],
+    rows: [
+      ['1', 'admin_root', 'admin@logistics.in', 'admin', 'Active'],
+      ['2', 'ops_manager', 'manager@logistics.in', 'manager', 'Active'],
+      ['3', 'client_demo', 'customer@client.in', 'customer', 'Active']
+    ]
+  }
+};
+
+function switchDbTable(tableName, btn) {
+  if (btn) {
+    $$('#view-database .btn').forEach(b => b.classList.remove('p'));
+    btn.classList.add('p');
+  }
+  const data = DB_TABLES[tableName] || DB_TABLES.warehouses;
+  $('#db-thead').innerHTML = `<tr>${data.cols.map(c => `<th>${c.toUpperCase()}</th>`).join('')}</tr>`;
+  $('#db-tbody').innerHTML = data.rows.map(r => `
+    <tr>${r.map(v => `<td>${v}</td>`).join('')}</tr>
+  `).join('');
+}
+function initDatabaseView() { switchDbTable('warehouses', null); }
+</script>
+</body>
+</html>
